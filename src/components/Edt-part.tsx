@@ -1,53 +1,21 @@
 import styled from 'styled-components';
 
 export const Timetable = styled.div`
-  display: flex;
+  display: grid;
+  height: 80vh;
+  grid-template-columns: 75px repeat(6, 1fr);
+  grid-template-rows: 30px repeat(50, 1fr);
+  grid-gap: 4px;
+  background-color: #404040;
 `;
 
-export const HoursColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 70px;
-`;
+interface PlaceItemProps {
+  gridColumn: string;
+  gridRow: string;
+}
 
-export const HoursDisplay = styled.div`
-  margin-bottom: 40px;
-`;
-
-export const WeekPane = styled.div`
-  background-color: #f55555;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const WeekRow = styled.div`
-  background-color: #fee;
-  width: 100%;
-  display: flex;
-`;
-
-export const BlockName = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid red;
-  width: calc(100% / 5);
-  height: 50px;
-`;
-
-export const BlockCours = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid red;
-  width: calc(100% / 5);
-`;
-
-export const Cours = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100px;
+export const PlaceItem = styled.div<PlaceItemProps>`
+  grid-column: ${props => props.gridColumn};
+  grid-row: ${props => props.gridRow};
+  background-color: #fff;
 `;
