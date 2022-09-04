@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Timetable = styled.div`
   display: grid;
-  height: 80vh;
-  grid-template-columns: 1fr repeat(6, 3fr);
-  grid-template-rows: 30px repeat(50, calc(80vh / 51));
+  height: 81vh;
+  grid-template-columns: 30px repeat(6, 3fr);
+  grid-template-rows: 50px repeat(50, calc(80vh / 51));
   grid-column-gap: 4px;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
@@ -40,6 +40,7 @@ export const PlaceItemCenter = styled.div<PlaceItemProps>`
   grid-column: ${props => props.gridColumn};
   grid-row: ${props => props.gridRow};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-overflow: ellipsis;

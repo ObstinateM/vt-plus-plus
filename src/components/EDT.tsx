@@ -14,6 +14,7 @@ import {
 import { Pagination } from '@nextui-org/react';
 import { formatHours } from '../utils/format';
 import { getEventColor } from '../utils/colors';
+import { getDateRangeOfWeek } from '../utils/date';
 
 // const hours = [
 //   '8:00',
@@ -119,13 +120,13 @@ const hours = [
   '20:00'
 ];
 
-// const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 
 export function EDT({ code }: { code: string }) {
   const [edt, setEDT] = useState<any>([]);
   const [weekEvent, setWeekEvent] = useState<any>([]);
   const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
+  const [weekDate, setWeekDate] = useState<string[]>([]);
 
   const loadEDT = async () => {
     try {
@@ -133,8 +134,8 @@ export function EDT({ code }: { code: string }) {
       setEDT(edt);
       // setWeekEvent(getWeekEvent(edt, weekNumber));
       const temp = getWeekEvent(edt, weekNumber);
-      setWeekEvent(temp);
       console.log(temp[0][0]);
+      setWeekEvent(temp);
     } catch (err) {
       console.log(err);
     }
@@ -146,6 +147,7 @@ export function EDT({ code }: { code: string }) {
 
   useEffect(() => {
     setWeekEvent(getWeekEvent(edt, weekNumber));
+    setWeekDate(getDateRangeOfWeek(weekNumber));
   }, [weekNumber]);
 
   return (
@@ -155,7 +157,8 @@ export function EDT({ code }: { code: string }) {
 
         {days.map((day, index) => (
           <PlaceItemCenter gridColumn={index + 2} gridRow="1" key={index}>
-            {`${day} 12`}
+            {day}
+            <b>{weekDate[index]}</b>
           </PlaceItemCenter>
         ))}
 

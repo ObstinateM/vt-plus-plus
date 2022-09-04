@@ -10,7 +10,9 @@ const codeToIcal: codeInterface = {
   l2infog1: 'l2infog1_etudiant(e)',
   l2infog2: 'l2infog2_etudiant(e)',
   l2infog3: 'l2infog3_etudiant(e)',
-  l2infog4: 'l2infog4_etudiant(e)'
+  l2infog4: 'l2infog4_etudiant(e)',
+  l3miai: 'l3miai_etudiant(e)',
+  l1info: 'l1portailmi_g1'
 };
 
 // Query l'url, parser le ical puis trier par date
@@ -73,9 +75,6 @@ export function getWeekEvent(edt: any, week: number) {
 
   return Object.keys(temp).map((date: any) => temp[date]);
 }
-
-// TODO: Later in the dev
-export function getMonthEvent(edt: any, week: number) {}
 
 export function getEventCoordinates({ start, end }: { start: Date; end: Date }) {
   return {

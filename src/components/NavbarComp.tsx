@@ -5,10 +5,11 @@ import SunIcon from '../assets/SunIcon.svg';
 
 interface props {
   changeTheme: () => void;
+  deleteCode: () => void;
   code: string;
 }
 
-export function NavbarComp({ changeTheme, code }: props) {
+export function NavbarComp({ changeTheme, deleteCode, code }: props) {
   return (
     <Navbar variant="sticky">
       <Navbar.Brand
@@ -29,9 +30,13 @@ export function NavbarComp({ changeTheme, code }: props) {
         variant="highlight-rounded"
       >
         <Navbar.Link isActive href="#">
-          Emploi du temps : {code}
+          {code !== '' ? `Emploi du temps : ${code.toLocaleUpperCase()}` : `Entrez un code`}
         </Navbar.Link>
-        <Navbar.Link href="#">Changer de code</Navbar.Link>
+        {code !== '' && (
+          <Navbar.Link onPress={deleteCode} href="#">
+            Changer de code
+          </Navbar.Link>
+        )}
       </Navbar.Content>
       <Navbar.Content
         css={{

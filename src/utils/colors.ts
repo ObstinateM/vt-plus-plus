@@ -15,8 +15,8 @@ const colors: colorsType = {
     borderColor: '#8be0e1'
   },
   Examen: {
-    bgColor: '#fef8e7',
-    borderColor: '#ffe4a7'
+    bgColor: '#fde7e7',
+    borderColor: '#fdbaba'
   },
   TP: {
     bgColor: '#dff7f7',
