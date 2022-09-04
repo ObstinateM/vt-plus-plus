@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react';
 import { getEDT, getWeekEvent, getEventCoordinates, getCurrentWeekNumber } from '../utils/database';
-import { Timetable, PlaceItem, PlaceItemNoStyle, Hours, PlaceItemHours } from './Edt-part';
+import {
+  Timetable,
+  PlaceItem,
+  PlaceItemNoStyle,
+  Hours,
+  PlaceItemHours,
+  PlaceItemCenter,
+  ClassNameDisplay,
+  ClassHour,
+  Center
+} from './Edt-part';
 import { Pagination } from '@nextui-org/react';
+import { formatHours } from '../utils/format';
+import { getEventColor } from '../utils/colors';
 
 // const hours = [
 //   '8:00',
@@ -107,7 +119,8 @@ const hours = [
   '20:00'
 ];
 
-const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+// const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 
 export function EDT({ code }: { code: string }) {
   const [edt, setEDT] = useState<any>([]);
@@ -118,9 +131,10 @@ export function EDT({ code }: { code: string }) {
     try {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
-      setWeekEvent(getWeekEvent(edt, weekNumber));
-      // const temp = getWeekEvent(edt, weekNumber);
-      // setWeekEvent(temp);
+      // setWeekEvent(getWeekEvent(edt, weekNumber));
+      const temp = getWeekEvent(edt, weekNumber);
+      setWeekEvent(temp);
+      console.log(temp[0][0]);
     } catch (err) {
       console.log(err);
     }
@@ -136,20 +150,13 @@ export function EDT({ code }: { code: string }) {
 
   return (
     <>
-      <Pagination
-        loop
-        color="secondary"
-        total="52"
-        initialPage={getCurrentWeekNumber()}
-        onChange={(number: number) => setWeekNumber(number)}
-      />
       <Timetable>
         <PlaceItemNoStyle gridColumn="1" gridRow="1"></PlaceItemNoStyle>
 
         {days.map((day, index) => (
-          <PlaceItem gridColumn={index + 2} gridRow="1" key={index}>
-            {day}
-          </PlaceItem>
+          <PlaceItemCenter gridColumn={index + 2} gridRow="1" key={index}>
+            {`${day} 12`}
+          </PlaceItemCenter>
         ))}
 
         {hours.map((hour, index) => (
@@ -161,24 +168,35 @@ export function EDT({ code }: { code: string }) {
         {weekEvent.map((day: any, index: number) => {
           return day.map((event: any) => {
             const { startCoord, endCoord } = getEventCoordinates(event);
+            const { bgColor, borderColor } = getEventColor(event.summary);
             return (
               <PlaceItem
+                bgColor={bgColor}
+                borderColor={borderColor}
                 gridColumn={index + 2}
                 gridRow={`${startCoord} / ${endCoord}`}
                 key={event.id}
-              ></PlaceItem>
+              >
+                {/* <Text size="$sm">{event.summary}</Text> */}
+                <ClassNameDisplay>{event.summary}</ClassNameDisplay>
+                <ClassHour>
+                  {formatHours(event)} ― {event.location}
+                </ClassHour>
+              </PlaceItem>
             );
           });
         })}
-
-        {/* <PlaceItemNoStyle gridColumn="2" gridRow="2 / 7">
-        <Card isPressable isHoverable variant="bordered" css={{ mw: '400px' }}>
-          <Card.Body>
-          <Text>A pressable card.</Text>
-          </Card.Body>
-        </Card>
-      </PlaceItemNoStyle> */}
       </Timetable>
+      <Center>
+        <Pagination
+          loop
+          color="secondary"
+          total="52"
+          initialPage={getCurrentWeekNumber()}
+          onChange={(number: number) => setWeekNumber(number)}
+          css={{ mt: '10px' }}
+        />
+      </Center>
     </>
   );
 }

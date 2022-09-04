@@ -11,7 +11,6 @@ interface props {
 export function NavbarComp({ changeTheme, code }: props) {
   return (
     <Navbar variant="sticky">
-      <Navbar.Toggle showIn="xs" />
       <Navbar.Brand
         css={{
           '@xs': {
@@ -19,7 +18,7 @@ export function NavbarComp({ changeTheme, code }: props) {
           }
         }}
       >
-        <Text b color="inherit" hideIn="xs">
+        <Text b color="inherit">
           VT++
         </Text>
       </Navbar.Brand>
@@ -32,6 +31,7 @@ export function NavbarComp({ changeTheme, code }: props) {
         <Navbar.Link isActive href="#">
           Emploi du temps : {code}
         </Navbar.Link>
+        <Navbar.Link href="#">Changer de code</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content
         css={{

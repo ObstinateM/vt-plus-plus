@@ -8,12 +8,7 @@ const lightTheme = createTheme({
 });
 
 const darkTheme = createTheme({
-  type: 'dark',
-  theme: {
-    colors: {
-      secondary: '#fff'
-    }
-  }
+  type: 'dark'
 });
 
 function App() {

@@ -4,7 +4,7 @@ export function formatMinutes(minutes: number) {
 }
 
 export function formatHours(event: any) {
-  return `${event.start.getHours()}H${formatMinutes(
+  return `${event.start.getHours()}:${formatMinutes(
     event.start.getMinutes()
-  )} - ${event.end.getHours()}H${formatMinutes(event.end.getMinutes())}`;
+  )} - ${event.end.getHours()}:${formatMinutes(event.end.getMinutes())}`;
 }
