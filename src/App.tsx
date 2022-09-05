@@ -14,7 +14,6 @@ const darkTheme = createTheme({
 });
 
 /**
- * TODO: Update la navbar, l'active n'est pas update si on change le texte
  * Régler les CORS => Créer une API tampon qui query l'ical et qui le renvoit direct => en go?
  */
 function App() {

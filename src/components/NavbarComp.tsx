@@ -29,13 +29,20 @@ export function NavbarComp({ changeTheme, deleteCode, code }: props) {
         hideIn="xs"
         variant="highlight-rounded"
       >
-        <Navbar.Link isActive href="#">
-          {code !== '' ? `Emploi du temps : ${code.toLocaleUpperCase()}` : `Entrez un code`}
-        </Navbar.Link>
-        {code !== '' && (
-          <Navbar.Link onPress={deleteCode} href="#">
-            Changer de code
+        {code === '' && (
+          <Navbar.Link isActive href="#">
+            Entrer un code
           </Navbar.Link>
+        )}
+        {code !== '' && (
+          <>
+            <Navbar.Link isActive href="#">
+              {`Emploi du temps : ${code.toLocaleUpperCase()}`}
+            </Navbar.Link>
+            <Navbar.Link onPress={deleteCode} href="#">
+              Changer de code
+            </Navbar.Link>
+          </>
         )}
       </Navbar.Content>
       <Navbar.Content
