@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Dispatch, useRef } from 'react';
-import { Input, Button, Checkbox } from '@nextui-org/react';
+import { Input, Button, Checkbox, FormElement } from '@nextui-org/react';
 
 interface InputCodeProps {
   setCode: Dispatch<React.SetStateAction<string>>;
 }
 
 export function InputCode({ setCode }: InputCodeProps) {
-  const newCode = useRef();
+  const newCode = useRef<HTMLFormElement>();
   const remind = useRef();
 
   return (
@@ -23,8 +23,10 @@ export function InputCode({ setCode }: InputCodeProps) {
           labelPlaceholder="Entrez votre code"
           color="secondary"
           size="lg"
+          // @ts-ignore
           ref={newCode}
         />
+        {/* @ts-ignore */}
         <Checkbox color="secondary" defaultSelected={true} size="sm" ref={remind}>
           Se souvenir
         </Checkbox>

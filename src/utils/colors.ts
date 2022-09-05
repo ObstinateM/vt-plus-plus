@@ -5,7 +5,7 @@ interface colorsType {
   };
 }
 
-const colors: colorsType = {
+const colorsLight: colorsType = {
   CM: {
     bgColor: '#f7e7fd',
     borderColor: '#e7bafd'
@@ -28,9 +28,38 @@ const colors: colorsType = {
   }
 };
 
-export function getEventColor(className: string) {
+const colorsDark: colorsType = {
+  CM: {
+    bgColor: '#280037',
+    borderColor: '#e7bafd'
+  },
+  TD: {
+    bgColor: '#004040',
+    borderColor: '#8be0e1'
+  },
+  Examen: {
+    bgColor: '#400000',
+    borderColor: '#fdbaba'
+  },
+  TP: {
+    bgColor: '#004040',
+    borderColor: '#8be0e1'
+  },
+  Others: {
+    bgColor: '#473400',
+    borderColor: '#ffe4a7'
+  }
+};
+
+export function getEventColor(classType: string, className: string) {
   let str = className.split(' ');
   let type = str[str.length - 1];
-  if (colors[type]) return colors[type];
-  return colors.Others;
+
+  if (classType === 'light') {
+    if (colorsLight[type]) return colorsLight[type];
+    return colorsLight.Others;
+  }
+
+  if (colorsDark[type]) return colorsDark[type];
+  return colorsDark.Others;
 }

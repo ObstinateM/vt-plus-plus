@@ -15,58 +15,7 @@ import { Pagination } from '@nextui-org/react';
 import { formatHours } from '../utils/format';
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
-
-// const hours = [
-//   '8:00',
-//   '',
-//   '',
-//   '',
-//   '9:00',
-//   '',
-//   '',
-//   '',
-//   '10:00',
-//   '',
-//   '',
-//   '',
-//   '11:00',
-//   '',
-//   '',
-//   '',
-//   '12:00',
-//   '',
-//   '',
-//   '',
-//   '13:00',
-//   '',
-//   '',
-//   '',
-//   '14:00',
-//   '',
-//   '',
-//   '',
-//   '15:00',
-//   '',
-//   '',
-//   '',
-//   '16:00',
-//   '',
-//   '',
-//   '',
-//   '17:00',
-//   '',
-//   '',
-//   '',
-//   '18:00',
-//   '',
-//   '',
-//   '',
-//   '19:00',
-//   '',
-//   '',
-//   '',
-//   '20:00'
-// ];
+import { useTheme } from '@nextui-org/react';
 
 const hours = [
   '8:00',
@@ -127,6 +76,7 @@ export function EDT({ code }: { code: string }) {
   const [weekEvent, setWeekEvent] = useState<any>([]);
   const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
   const [weekDate, setWeekDate] = useState<string[]>([]);
+  const { type } = useTheme();
 
   const loadEDT = async () => {
     try {
@@ -152,7 +102,7 @@ export function EDT({ code }: { code: string }) {
 
   return (
     <>
-      <Timetable>
+      <Timetable type={type}>
         <PlaceItemNoStyle gridColumn="1" gridRow="1"></PlaceItemNoStyle>
 
         {days.map((day, index) => (
@@ -163,7 +113,7 @@ export function EDT({ code }: { code: string }) {
         ))}
 
         {hours.map((hour, index) => (
-          <PlaceItemHours gridColumn="1" gridRow={index + 2} key={index}>
+          <PlaceItemHours gridColumn="1" gridRow={index + 2} key={index} type={type}>
             <Hours>{hour}</Hours>
           </PlaceItemHours>
         ))}
@@ -171,7 +121,7 @@ export function EDT({ code }: { code: string }) {
         {weekEvent.map((day: any, index: number) => {
           return day.map((event: any) => {
             const { startCoord, endCoord } = getEventCoordinates(event);
-            const { bgColor, borderColor } = getEventColor(event.summary);
+            const { bgColor, borderColor } = getEventColor(type, event.summary);
             return (
               <PlaceItem
                 bgColor={bgColor}
@@ -194,7 +144,7 @@ export function EDT({ code }: { code: string }) {
         <Pagination
           loop
           color="secondary"
-          total="52"
+          total={52}
           initialPage={getCurrentWeekNumber()}
           onChange={(number: number) => setWeekNumber(number)}
           css={{ mt: '10px' }}

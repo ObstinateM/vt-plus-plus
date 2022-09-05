@@ -1,18 +1,28 @@
 import styled from 'styled-components';
 
-export const Timetable = styled.div`
+interface borderColor {
+  type: string;
+}
+
+export const Timetable = styled.div<borderColor>`
   display: grid;
   height: 81vh;
   grid-template-columns: 30px repeat(6, 3fr);
   grid-template-rows: 50px repeat(50, calc(80vh / 51));
   grid-column-gap: 4px;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
+  border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};
+  border-bottom: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};
 `;
 
 interface PlaceItemProps {
   gridColumn: string | number;
   gridRow: string | number;
+}
+
+interface PlaceItemWithBorderProps {
+  gridColumn: string | number;
+  gridRow: string | number;
+  type: string;
 }
 
 interface PlaceItemPropsColor {
@@ -46,11 +56,11 @@ export const PlaceItemCenter = styled.div<PlaceItemProps>`
   text-overflow: ellipsis;
 `;
 
-export const PlaceItemHours = styled.div<PlaceItemProps>`
+export const PlaceItemHours = styled.div<PlaceItemWithBorderProps>`
   grid-column: ${props => props.gridColumn};
   grid-row: ${props => props.gridRow};
   display: flex;
-  border-top: 1px solid #000;
+  border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};
   justify-content: flex-end;
 `;
 
@@ -69,10 +79,12 @@ export const ClassNameDisplay = styled.p`
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* color: #000; */
 `;
 
 export const ClassHour = styled.p`
   font-size: 0.75rem;
+  /* color: #000; */
 `;
 
 export const Center = styled.div`
