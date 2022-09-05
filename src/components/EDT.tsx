@@ -82,10 +82,9 @@ export function EDT({ code }: { code: string }) {
     try {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
-      // setWeekEvent(getWeekEvent(edt, weekNumber));
-      const temp = getWeekEvent(edt, weekNumber);
-      console.log(temp[0][0]);
-      setWeekEvent(temp);
+      setWeekEvent(getWeekEvent(edt, weekNumber));
+      // const temp = getWeekEvent(edt, weekNumber);
+      // setWeekEvent(temp);
     } catch (err) {
       console.log(err);
     }
