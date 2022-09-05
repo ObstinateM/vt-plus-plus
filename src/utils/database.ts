@@ -1,47 +1,29 @@
 import ical from 'node-ical';
 import 'setimmediate';
 
-interface codeInterface {
-  [key: string]: string;
-}
-
-const codeToIcal: codeInterface = {
-  l3miaa: 'l3miaa',
-  l2infog1: 'l2infog1_etudiant(e)',
-  l2infog2: 'l2infog2_etudiant(e)',
-  l2infog3: 'l2infog3_etudiant(e)',
-  l2infog4: 'l2infog4_etudiant(e)',
-  l3miai: 'l3miai_etudiant(e)',
-  l1info: 'l1portailmi_g1'
-};
-
 // Query l'url, parser le ical puis trier par date
 export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
     const database: any = [];
 
-    ical.fromURL(
-      `https://edt.univ-evry.fr/icsetudiant/${codeToIcal[code]}.ics`,
-      {},
-      function (err, data) {
-        if (err) {
-          console.log(err);
-          reject(err);
-        }
+    ical.fromURL(`http://obstinate.fr:3005/${code}`, {}, function (err, data) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
 
-        for (let k in data) {
-          if (data.hasOwnProperty(k)) {
-            const ev = data[k];
-            if (data[k].type == 'VEVENT') {
-              database.push(ev);
-            }
+      for (let k in data) {
+        if (data.hasOwnProperty(k)) {
+          const ev = data[k];
+          if (data[k].type == 'VEVENT') {
+            database.push(ev);
           }
         }
-
-        const calendar = database.sort((a: any, b: any) => a.start.getTime() - b.start.getTime());
-        resolve(calendar);
       }
-    );
+
+      const calendar = database.sort((a: any, b: any) => a.start.getTime() - b.start.getTime());
+      resolve(calendar);
+    });
   });
 }
 

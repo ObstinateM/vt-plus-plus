@@ -13,8 +13,8 @@ const darkTheme = createTheme({
 });
 
 /**
- * Régler les CORS => Créer une API tampon qui query l'ical et qui le renvoit direct => en go?
  * Rendre fonctionnel "se souvenir"
+ * Gérer si les cours sont trop petit
  */
 function App() {
   const [code, setCode] = useState('');
