@@ -31,7 +31,7 @@ export function NavbarComp({ changeTheme, deleteCode, code }: props) {
       >
         {code === '' && (
           <Navbar.Link isActive href="#">
-            Entrer un code
+            Se connecter
           </Navbar.Link>
         )}
         {code !== '' && (

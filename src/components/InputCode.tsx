@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Dispatch, useRef } from 'react';
-import { Input, Button, Checkbox, FormElement } from '@nextui-org/react';
+import { Input, Button, Checkbox, Card, Text } from '@nextui-org/react';
 
 interface InputCodeProps {
   setCode: Dispatch<React.SetStateAction<string>>;
@@ -18,21 +18,36 @@ export function InputCode({ setCode }: InputCodeProps) {
       }}
     >
       <InputDiv>
-        <Input
-          clearable
-          labelPlaceholder="Entrez votre code"
-          color="secondary"
-          size="lg"
-          // @ts-ignore
-          ref={newCode}
-        />
-        {/* @ts-ignore */}
-        <Checkbox color="secondary" defaultSelected={true} size="sm" ref={remind}>
-          Se souvenir
-        </Checkbox>
-        <Button type="submit" color="secondary" auto>
-          Secondary
-        </Button>
+        <Card css={{ mw: '400px' }}>
+          <Card.Header>
+            <Text b>Connexion</Text>
+          </Card.Header>
+          <Card.Divider />
+          <Card.Body>
+            <Input
+              clearable
+              labelPlaceholder="Entrez votre code"
+              color="secondary"
+              size="lg"
+              // @ts-ignore
+              ref={newCode}
+              css={{ mt: '15px', mb: '15px' }}
+            />
+            <Checkbox
+              color="secondary"
+              defaultSelected={true}
+              size="sm"
+              // @ts-ignore
+              ref={remind}
+              css={{ mb: '15px' }}
+            >
+              Se souvenir
+            </Checkbox>
+            <Button type="submit" color="secondary" auto>
+              Se connecter
+            </Button>
+          </Card.Body>
+        </Card>
       </InputDiv>
     </form>
   );
@@ -46,8 +61,4 @@ const InputDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  & > * {
-    margin: 10px;
-  }
 `;

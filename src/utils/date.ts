@@ -13,14 +13,14 @@ Date.prototype.getWeek = function () {
 
 export function getDateRangeOfWeek(weekNo) {
   var d1 = new Date();
-  var numOfdaysPastSinceLastMonday = eval(d1.getDay() - 1);
+  var numOfdaysPastSinceLastMonday = d1.getDay() - 1;
   d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
   var weekNoToday = d1.getWeek();
-  var weeksInTheFuture = eval(weekNo - weekNoToday);
-  d1.setDate(d1.getDate() + eval(7 * weeksInTheFuture));
+  var weeksInTheFuture = weekNo - weekNoToday;
+  d1.setDate(d1.getDate() + 7 * weeksInTheFuture);
   let range = [];
   for (let i = 0; i < 6; i++) {
-    range.push(eval(d1.getDate()) + '/' + eval(d1.getMonth() + 1));
+    range.push(d1.getDate() + '/' + (d1.getMonth() + 1));
     d1.setDate(d1.getDate() + 1);
   }
   return range;
