@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { NextUIProvider, createTheme } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
@@ -14,9 +14,7 @@ const darkTheme = createTheme({
 });
 
 /**
- * Rendre fonctionnel "se souvenir"
  * UI si height écran plus petite ?
- * Hotkey fleche pour changer de semaine
  * Gérer si les cours sont trop petit
  */
 function App() {
@@ -24,7 +22,6 @@ function App() {
   const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
   const changeTheme = () => setLightMode(mode => !mode);
-  const deleteCode = () => setCode('');
 
   const updateCode = (newCode: string, remember: boolean) => {
     setCode(newCode);

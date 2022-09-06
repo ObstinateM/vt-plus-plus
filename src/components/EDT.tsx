@@ -83,8 +83,6 @@ export function EDT({ code }: { code: string }) {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
       setWeekEvent(getWeekEvent(edt, weekNumber));
-      // const temp = getWeekEvent(edt, weekNumber);
-      // setWeekEvent(temp);
     } catch (err) {
       console.log(err);
     }
@@ -148,7 +146,6 @@ export function EDT({ code }: { code: string }) {
                 gridRow={`${startCoord} / ${endCoord}`}
                 key={event.id}
               >
-                {/* <Text size="$sm">{event.summary}</Text> */}
                 <ClassNameDisplay>{event.summary}</ClassNameDisplay>
                 <ClassHour>
                   {formatHours(event)} ― {event.location}
