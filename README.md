@@ -1,6 +1,6 @@
 # VT++
 
-An alternative for the VT time table
+An alternative for the VT schedule at UEVE
 
 ![Preview](https://cdn.discordapp.com/attachments/618400681488941059/1016666932428148767/unknown.png)
 
