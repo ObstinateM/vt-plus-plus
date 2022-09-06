@@ -33,7 +33,7 @@ function App() {
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
-      <NavbarComp changeTheme={changeTheme} code={code} deleteCode={deleteCode} />
+      <NavbarComp changeTheme={changeTheme} code={code} deleteCode={updateCode} />
       {code !== '' && <EDT code={code} />}
       {code === '' && <InputCode setCode={updateCode} />}
     </NextUIProvider>

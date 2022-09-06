@@ -5,7 +5,7 @@ import SunIcon from '../assets/SunIcon.svg';
 
 interface props {
   changeTheme: () => void;
-  deleteCode: () => void;
+  deleteCode: (newCode: '', remind: true) => void;
   code: string;
 }
 
@@ -39,7 +39,7 @@ export function NavbarComp({ changeTheme, deleteCode, code }: props) {
             <Navbar.Link isActive href="#">
               {`Emploi du temps : ${code.toLocaleUpperCase()}`}
             </Navbar.Link>
-            <Navbar.Link onPress={deleteCode} href="#">
+            <Navbar.Link onPress={() => deleteCode('', true)} href="#">
               Changer de code
             </Navbar.Link>
           </>
