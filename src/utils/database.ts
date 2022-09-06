@@ -6,7 +6,7 @@ export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
     const database: any = [];
 
-    ical.fromURL(`http://obstinate.fr:3005/${code}`, {}, function (err, data) {
+    ical.fromURL(`https://edt-api.obstinate.fr/${code}`, {}, function (err, data) {
       if (err) {
         console.log(err);
         reject(err);

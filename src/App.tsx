@@ -14,6 +14,8 @@ const darkTheme = createTheme({
 
 /**
  * Rendre fonctionnel "se souvenir"
+ * UI si height écran plus petite ?
+ * Hotkey fleche pour changer de semaine
  * Gérer si les cours sont trop petit
  */
 function App() {

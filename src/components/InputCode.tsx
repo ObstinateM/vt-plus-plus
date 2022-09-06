@@ -10,13 +10,14 @@ export function InputCode({ setCode }: InputCodeProps) {
   const newCode = useRef<HTMLFormElement>();
   const remind = useRef();
 
+  const onSubmit = (form: any) => {
+    form.preventDefault();
+    // @ts-ignore
+    setCode(newCode.current.value);
+  };
+
   return (
-    <form
-      onSubmit={() => {
-        // @ts-ignore
-        setCode(newCode.current.value);
-      }}
-    >
+    <form onSubmit={onSubmit}>
       <InputDiv>
         <Card css={{ mw: '400px' }}>
           <Card.Header>
