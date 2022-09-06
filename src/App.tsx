@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NextUIProvider, createTheme } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
@@ -28,9 +28,24 @@ function App() {
     if (remember) setCodeStorage(newCode);
   };
 
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setLightMode(false);
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      setLightMode(!event.matches);
+    });
+  }, []);
+
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
-      <NavbarComp changeTheme={changeTheme} code={code} deleteCode={updateCode} />
+      <NavbarComp
+        changeTheme={changeTheme}
+        code={code}
+        deleteCode={updateCode}
+        isLight={isLightMode}
+      />
       {code !== '' && <EDT code={code} />}
       {code === '' && <InputCode setCode={updateCode} />}
     </NextUIProvider>

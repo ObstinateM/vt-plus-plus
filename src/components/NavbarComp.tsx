@@ -7,9 +7,10 @@ interface props {
   changeTheme: () => void;
   deleteCode: (newCode: '', remind: true) => void;
   code: string;
+  isLight: boolean;
 }
 
-export function NavbarComp({ changeTheme, deleteCode, code }: props) {
+export function NavbarComp({ changeTheme, deleteCode, code, isLight }: props) {
   return (
     <Navbar variant="sticky">
       <Navbar.Brand
@@ -54,7 +55,7 @@ export function NavbarComp({ changeTheme, deleteCode, code }: props) {
         }}
       >
         <Switch
-          checked={true}
+          checked={isLight}
           size="xl"
           color="secondary"
           iconOn={<img src={SunIcon} />}
