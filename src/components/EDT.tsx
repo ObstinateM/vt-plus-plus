@@ -90,8 +90,27 @@ export function EDT({ code }: { code: string }) {
     }
   };
 
+  const changeWeek = (number: number): void => {
+    setWeekNumber(actual => actual + number);
+  };
+
   useEffect(() => {
     loadEDT();
+    document.addEventListener('keyup', event => {
+      event.preventDefault();
+
+      if (event.key === 'ArrowRight') {
+        changeWeek(1);
+      }
+
+      if (event.key === 'ArrowLeft') {
+        changeWeek(-1);
+      }
+
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        setWeekNumber(getCurrentWeekNumber());
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -144,7 +163,7 @@ export function EDT({ code }: { code: string }) {
           loop
           color="secondary"
           total={52}
-          initialPage={getCurrentWeekNumber()}
+          page={weekNumber}
           onChange={(number: number) => setWeekNumber(number)}
           css={{ mt: '10px' }}
         />

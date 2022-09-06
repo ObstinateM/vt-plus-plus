@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NextUIProvider, createTheme } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
