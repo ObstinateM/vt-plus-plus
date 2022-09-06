@@ -89,7 +89,9 @@ export function EDT({ code }: { code: string }) {
   };
 
   const changeWeek = (number: number): void => {
-    setWeekNumber(actual => actual + number);
+    setWeekNumber(actual =>
+      actual + number < 1 || actual + number > 52 ? actual : actual + number
+    );
   };
 
   useEffect(() => {
@@ -157,7 +159,6 @@ export function EDT({ code }: { code: string }) {
       </Timetable>
       <Center>
         <Pagination
-          loop
           color="secondary"
           total={52}
           page={weekNumber}
