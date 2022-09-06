@@ -3,6 +3,7 @@ import { NextUIProvider, createTheme } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
 import { InputCode } from './components/InputCode';
+import { useLocalStorage } from './hooks/useLocalstorage';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -19,16 +20,22 @@ const darkTheme = createTheme({
  * Gérer si les cours sont trop petit
  */
 function App() {
-  const [code, setCode] = useState('');
+  const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
+  const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
   const changeTheme = () => setLightMode(mode => !mode);
   const deleteCode = () => setCode('');
+
+  const updateCode = (newCode: string, remember: boolean) => {
+    setCode(newCode);
+    if (remember) setCodeStorage(newCode);
+  };
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
       <NavbarComp changeTheme={changeTheme} code={code} deleteCode={deleteCode} />
       {code !== '' && <EDT code={code} />}
-      {code === '' && <InputCode setCode={setCode} />}
+      {code === '' && <InputCode setCode={updateCode} />}
     </NextUIProvider>
   );
 }

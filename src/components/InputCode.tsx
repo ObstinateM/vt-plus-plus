@@ -1,23 +1,24 @@
 import styled from 'styled-components';
-import { Dispatch, useRef } from 'react';
+import { Dispatch, useRef, useState } from 'react';
 import { Input, Button, Checkbox, Card, Text } from '@nextui-org/react';
 
 interface InputCodeProps {
-  setCode: Dispatch<React.SetStateAction<string>>;
+  setCode: (code: string, remember: boolean) => void;
 }
 
 export function InputCode({ setCode }: InputCodeProps) {
   const newCode = useRef<HTMLFormElement>();
-  const remind = useRef();
+  // const remind = useRef();
+  const [remind, setRemind] = useState(true);
 
   const onSubmit = (form: any) => {
     form.preventDefault();
     // @ts-ignore
-    setCode(newCode.current.value);
+    setCode(newCode.current.value, remind);
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} name="form">
       <InputDiv>
         <Card css={{ mw: '400px' }}>
           <Card.Header>
@@ -38,9 +39,8 @@ export function InputCode({ setCode }: InputCodeProps) {
               color="secondary"
               defaultSelected={true}
               size="sm"
-              // @ts-ignore
-              ref={remind}
               css={{ mb: '15px' }}
+              onChange={state => setRemind(state)}
             >
               Se souvenir
             </Checkbox>
