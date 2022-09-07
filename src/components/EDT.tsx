@@ -15,7 +15,7 @@ import { Pagination } from '@nextui-org/react';
 import { formatHours } from '../utils/format';
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
-import { useTheme } from '@nextui-org/react';
+import { useTheme, Text } from '@nextui-org/react';
 
 const hours = [
   '8:00',

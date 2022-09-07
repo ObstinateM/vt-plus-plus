@@ -4,15 +4,33 @@ import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
 import { InputCode } from './components/InputCode';
 import { useLocalStorage } from './hooks/useLocalstorage';
+import { createGlobalStyle } from 'styled-components';
+import { ClassNameDisplay, ClassHour } from './components/Edt-part';
 
 const lightTheme = createTheme({
   type: 'light'
+  // theme: {
+  //   fontSizes: {
+  //     base: '1.4vh'
+  //   }
+  // }
 });
 
 const darkTheme = createTheme({
   type: 'dark'
 });
 
+const GlobalStyle = createGlobalStyle`
+  @media screen and (max-height: 1200px) {
+    ${ClassHour} {
+      font-size: 8px;
+    }
+
+    ${ClassNameDisplay} {
+      font-size: 9px;
+    }
+  }
+`;
 /**
  * UI si height écran plus petite ?
  * Gérer si les cours sont trop petit
@@ -40,6 +58,7 @@ function App() {
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
+      <GlobalStyle />
       <NavbarComp
         changeTheme={changeTheme}
         code={code}
