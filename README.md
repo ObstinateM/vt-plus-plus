@@ -18,6 +18,10 @@ Contributions are always welcome!
 
 Just open a PR!
 
-## Authors
+## Author
 
 - [@ObstinateM](https://www.github.com/ObstinateM)
+
+## Contributors
+
+- [@yanisdiga](https://github.com/yanisdiga)
