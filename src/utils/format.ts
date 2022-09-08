@@ -26,11 +26,35 @@ const l1portailmi: ueObject = {
   UED233: 'ARCHITECTURE'
 };
 
+const l2info: ueObject = {
+  UED311: 'PROBABILITES',
+  UED312: 'THEORIE DES LANG...',
+  UED313: 'ANGLAIS',
+  UED321: 'PROGRAMMATION FONCTIONNELLE',
+  UED322: 'WEB DYNAMIQUE',
+  UED323: 'INTRODUCTION AUX BASE DE DONNEE',
+  UED411: 'LOGIQUE',
+  UED412: 'PROGRAMMATION ORIENTEE OBJET',
+  UED421: 'INTRODUCTION AUX RESEAUX',
+  UED422: 'PROGRAMMATION SYSTEME',
+  UEO311: 'ECONOMIE POUR L INFORMATIQUE 1',
+  UEO312: 'ALGEBRE ET ARITH...',
+  UEO411: 'STATISTIQUES',
+  UEP311: 'PPEI',
+  UET313: 'ECONOMIE POUR L INFORMATIQUE',
+  UET411: 'ANGLAIS',
+  UET412: 'COMPETENCES NUMERIQUES (PIX)'
+};
+
 const ueList: ueListObject = {
   l1portailmi_g1: l1portailmi,
   l1portailmi_g2: l1portailmi,
   l1portailmi_g3: l1portailmi,
-  l1portailmi_g4: l1portailmi
+  l1portailmi_g4: l1portailmi,
+  l2infog1: l2info,
+  l2infog2: l2info,
+  l2infog3: l2info,
+  l2infog4: l2info
 };
 
 /**
