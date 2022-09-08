@@ -1,40 +1,20 @@
 import { useEffect, useState } from 'react';
-import { NextUIProvider, createTheme } from '@nextui-org/react';
+import { NextUIProvider, createTheme, Link } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
 import { InputCode } from './components/InputCode';
 import { useLocalStorage } from './hooks/useLocalstorage';
-import { createGlobalStyle } from 'styled-components';
-import { ClassNameDisplay, ClassHour } from './components/Edt-part';
+import styled from 'styled-components';
+import { Center } from './components/Edt-part';
 
 const lightTheme = createTheme({
   type: 'light'
-  // theme: {
-  //   fontSizes: {
-  //     base: '1.4vh'
-  //   }
-  // }
 });
 
 const darkTheme = createTheme({
   type: 'dark'
 });
 
-const GlobalStyle = createGlobalStyle`
-  /* @media screen and (max-height: 1000px) {
-    ${ClassHour} {
-      font-size: 8px;
-    }
-
-    ${ClassNameDisplay} {
-      font-size: 9px;
-    }
-  } */
-`;
-/**
- * UI si height écran plus petite ?
- * Gérer si les cours sont trop petit
- */
 function App() {
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
   const [code, setCode] = useState(codeStorage);
@@ -58,7 +38,6 @@ function App() {
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
-      <GlobalStyle />
       <NavbarComp
         changeTheme={changeTheme}
         code={code}
@@ -67,6 +46,16 @@ function App() {
       />
       {code !== '' && <EDT code={code} />}
       {code === '' && <InputCode setCode={updateCode} />}
+      <Center>
+        <Link
+          href="https://github.com/ObstinateM/vt-plus-plus"
+          isExternal
+          color="secondary"
+          css={{ pt: '10px' }}
+        >
+          Developped by Mathis "Obstinate" Beauville - See source code
+        </Link>
+      </Center>
     </NextUIProvider>
   );
 }
