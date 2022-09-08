@@ -62,3 +62,9 @@ export function formatHours(event: any) {
     event.start.getMinutes()
   )} - ${event.end.getHours()}:${formatMinutes(event.end.getMinutes())}`;
 }
+
+export function formatClassname(summary: string) {
+  if (summary.length < 25) return summary;
+  const splitted = summary.split(' - ');
+  return summary.slice(0, 25) + (splitted[1] ? '... - ' + splitted[1] : '...');
+}

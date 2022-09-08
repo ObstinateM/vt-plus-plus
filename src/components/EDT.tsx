@@ -12,7 +12,7 @@ import {
   Center
 } from './Edt-part';
 import { Pagination } from '@nextui-org/react';
-import { formatHours, formatUE, shouldBeFormatted } from '../utils/format';
+import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
 import { useTheme } from '@nextui-org/react';
@@ -149,7 +149,9 @@ export function EDT({ code }: { code: string }) {
                 key={event.id}
               >
                 <ClassNameDisplay>
-                  {shouldBeFormatted(code) ? formatUE(event.summary, code) : event.summary}
+                  {formatClassname(
+                    shouldBeFormatted(code) ? formatUE(event.summary, code) : event.summary
+                  )}
                 </ClassNameDisplay>
                 <ClassHour>
                   {formatHours(event)} ― {event.location}

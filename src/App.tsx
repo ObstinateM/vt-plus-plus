@@ -21,7 +21,7 @@ const darkTheme = createTheme({
 });
 
 const GlobalStyle = createGlobalStyle`
-  @media screen and (max-height: 1200px) {
+  /* @media screen and (max-height: 1000px) {
     ${ClassHour} {
       font-size: 8px;
     }
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     ${ClassNameDisplay} {
       font-size: 9px;
     }
-  }
+  } */
 `;
 /**
  * UI si height écran plus petite ?
