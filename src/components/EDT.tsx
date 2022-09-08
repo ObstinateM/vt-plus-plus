@@ -12,10 +12,10 @@ import {
   Center
 } from './Edt-part';
 import { Pagination } from '@nextui-org/react';
-import { formatHours } from '../utils/format';
+import { formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
-import { useTheme, Text } from '@nextui-org/react';
+import { useTheme } from '@nextui-org/react';
 
 const hours = [
   '8:00',
@@ -148,7 +148,9 @@ export function EDT({ code }: { code: string }) {
                 gridRow={`${startCoord} / ${endCoord}`}
                 key={event.id}
               >
-                <ClassNameDisplay>{event.summary}</ClassNameDisplay>
+                <ClassNameDisplay>
+                  {shouldBeFormatted(code) ? formatUE(event.summary, code) : event.summary}
+                </ClassNameDisplay>
                 <ClassHour>
                   {formatHours(event)} ― {event.location}
                 </ClassHour>
