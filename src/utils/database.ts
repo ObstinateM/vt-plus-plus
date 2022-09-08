@@ -27,6 +27,7 @@ export function getEDT(code: string) {
   });
 }
 
+// TODO: Fix the bug, when a day isnt filled it wrongly place others
 export function getWeekEvent(edt: any, week: number) {
   // Some dark magic from stackoverflow
   const date = new Date();
@@ -46,14 +47,14 @@ export function getWeekEvent(edt: any, week: number) {
           ) ===
         week
     )
-    .reduce((acc: any, event: any) => {
-      const day = event.start.getDay();
-      if (!acc[day]) {
-        acc[day] = [];
-      }
-      acc[day].push(event);
-      return acc;
-    }, {});
+    .reduce(
+      (acc: any, event: any) => {
+        const day = event.start.getDay();
+        acc[day].push(event);
+        return acc;
+      },
+      { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
+    );
 
   return Object.keys(temp).map((date: any) => temp[date]);
 }
