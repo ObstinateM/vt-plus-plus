@@ -4,8 +4,8 @@ import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
 import { InputCode } from './components/InputCode';
 import { useLocalStorage } from './hooks/useLocalstorage';
-import styled from 'styled-components';
-import { Center } from './components/Edt-part';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -14,6 +14,17 @@ const lightTheme = createTheme({
 const darkTheme = createTheme({
   type: 'dark'
 });
+
+const GlobalStyle = createGlobalStyle`
+  @media screen and (max-height: 1200px) {
+    ${ClassHour} {
+      font-size: 8px;
+    }
+    ${ClassNameDisplay} {
+      font-size: 9px;
+    }
+  }
+`;
 
 function App() {
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
@@ -38,6 +49,7 @@ function App() {
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
+      <GlobalStyle />
       <NavbarComp
         changeTheme={changeTheme}
         code={code}
