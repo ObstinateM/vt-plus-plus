@@ -18,6 +18,10 @@ const colorsLight: colorsType = {
     bgColor: '#fde7e7',
     borderColor: '#fdbaba'
   },
+  DS: {
+    bgColor: '#fde7e7',
+    borderColor: '#fdbaba'
+  },
   TP: {
     bgColor: '#dff7f7',
     borderColor: '#8be0e1'
@@ -38,6 +42,10 @@ const colorsDark: colorsType = {
     borderColor: '#8be0e1'
   },
   Examen: {
+    bgColor: '#400000',
+    borderColor: '#fdbaba'
+  },
+  DS: {
     bgColor: '#400000',
     borderColor: '#fdbaba'
   },
