@@ -25,3 +25,4 @@ Just open a PR!
 ## Contributors
 
 - [@yanisdiga](https://github.com/yanisdiga)
+- [@UncleSamulus](https://github.com/UncleSamulus)
