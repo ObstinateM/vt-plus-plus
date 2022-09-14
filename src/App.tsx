@@ -33,6 +33,7 @@ function App() {
   const changeTheme = () => setLightMode(mode => !mode);
 
   const updateCode = (newCode: string, remember: boolean) => {
+    newCode = newCode.toLocaleLowerCase();
     setCode(newCode);
     if (remember) setCodeStorage(newCode);
   };
