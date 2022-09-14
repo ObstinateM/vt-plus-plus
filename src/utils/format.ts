@@ -47,12 +47,12 @@ const l2info: ueObject = {
 };
 
 const l3dlbi: ueObject = {
-  UED514: 'BIOLOGIE STRUCTURALE', // Not for DLBI - but in VT for now
-  UED531: 'STATISTIQUES POUR LA BIOLOGIE', // idem
+  UED514: 'BIOLOGIE STRUCTURALE',
+  UED531: 'STATISTIQUES POUR LA BIOLOGIE',
   UET511: 'ANGLAIS',
   UED513: 'BIOLOGIE CELLULAIRE',
   UED511: 'RÉGULATION EXPRESSION GÉNIQUE PROCARYOTE',
-  UED521: 'BASES DE DONNÉES', // Not for DLBI
+  UED521: 'BASES DE DONNÉES',
   UED524: 'PROGRAMMATION R',
   UED512: 'BIOCHIMIE'
 }
@@ -66,7 +66,7 @@ const ueList: ueListObject = {
   l2infog2: l2info,
   l2infog3: l2info,
   l2infog4: l2info,
-  l3dlbi: l3dlbi,
+  l3dlbi: l3dlbi
 };
 
 /**
