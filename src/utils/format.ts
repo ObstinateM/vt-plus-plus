@@ -55,7 +55,7 @@ const l3dlbi: ueObject = {
   UED521: 'BASES DE DONNÉES',
   UED524: 'PROGRAMMATION R',
   UED512: 'BIOCHIMIE'
-}
+};
 
 const ueList: ueListObject = {
   l1portailmi_g1: l1portailmi,
@@ -66,7 +66,8 @@ const ueList: ueListObject = {
   l2infog2: l2info,
   l2infog3: l2info,
   l2infog4: l2info,
-  l3dlbi: l3dlbi
+  l3dlbi: l3dlbi,
+  l2lddisdv: l3dlbi
 };
 
 /**
