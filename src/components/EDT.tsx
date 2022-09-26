@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getEDT, getWeekEvent, getEventCoordinates, getCurrentWeekNumber } from '../utils/database';
+import {
+  getEDT,
+  getWeekEvent,
+  getEventCoordinates,
+  getCurrentWeekNumber,
+  getNextExam
+} from '../utils/database';
 import {
   Timetable,
   PlaceItem,
@@ -76,6 +82,7 @@ export function EDT({ code }: { code: string }) {
   const [weekEvent, setWeekEvent] = useState<any>([]);
   const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
   const [weekDate, setWeekDate] = useState<string[]>([]);
+  const [nextExam, setNextExam] = useState<any[]>([]);
   const { type } = useTheme();
 
   const loadEDT = async () => {
@@ -83,6 +90,7 @@ export function EDT({ code }: { code: string }) {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
       setWeekEvent(getWeekEvent(edt, weekNumber));
+      setNextExam(getNextExam(edt));
     } catch (err) {
       console.log(err);
     }
