@@ -7,6 +7,7 @@ import { useLocalStorage } from './hooks/useLocalstorage';
 import { useLocalStorageUpdate } from './hooks/useLocalstorageUpdate';
 import { createGlobalStyle } from 'styled-components';
 import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
+import updateInfo from './assets/update.json';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -28,12 +29,14 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const lastUpdate = 'exam';
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
   const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
-  const [updateStorage, setUpdateStorage] = useLocalStorageUpdate('update', lastUpdate);
-  const [updateVisible, setUpdateVisible] = useState(updateStorage === `${lastUpdate}:no`);
+  const [updateStorage, setUpdateStorage] = useLocalStorageUpdate('update', updateInfo.name);
+  // ! cause the updateStorage shouldn't be undefined
+  const [updateVisible, setUpdateVisible] = useState(
+    updateStorage!.replace('"', '') === `${updateInfo.name}:no`
+  );
   const changeTheme = () => setLightMode(mode => !mode);
 
   const updateCode = (newCode: string, remember: boolean) => {
@@ -43,7 +46,7 @@ function App() {
   };
 
   const updateClose = () => {
-    setUpdateStorage(`${lastUpdate}:yes`);
+    setUpdateStorage(`${updateInfo.name}:yes`);
     setUpdateVisible(false);
   };
 
@@ -56,6 +59,10 @@ function App() {
       setLightMode(!event.matches);
     });
   }, []);
+
+  // useEffect(() => {
+  //   // setUpdateVisible();
+  // }, [updateStorage]);
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
@@ -78,7 +85,7 @@ function App() {
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <p>Vous pouvez désormais voir vos prochains examens (voir en dessous de l'edt)</p>
+          <p>{updateInfo.p}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onClick={updateClose}>

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-export const useLocalStorageUpdate = (keyName: string, lastUpdate: string) => {
+export const useLocalStorageUpdate = (
+  keyName: string,
+  lastUpdate: string
+): [string | undefined, (arg0: string) => void] => {
   const setValue = (newValue: string) => {
     try {
       window.localStorage.setItem(keyName, JSON.stringify(newValue));

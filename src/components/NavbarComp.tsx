@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Navbar, Link, Text, Switch } from '@nextui-org/react';
+import { Navbar, Text, Switch } from '@nextui-org/react';
 import MoonIcon from '../assets/MoonIcon.svg';
 import SunIcon from '../assets/SunIcon.svg';
 
