@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Avatar, Badge, Table, Tooltip } from '@nextui-org/react';
 import styled from 'styled-components';
-import { formatClassname, formatHours } from '../utils/format';
+import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 
 const MarginDiv = styled.div`
   padding: 5rem;
@@ -11,7 +11,7 @@ const MarginDiv = styled.div`
   }
 `;
 
-export function ExamList({ exam }: any) {
+export function ExamList({ exam, code }: any) {
   useEffect(() => {
     console.log(exam);
   }, [exam]);
@@ -46,7 +46,9 @@ export function ExamList({ exam }: any) {
         <Table.Body>
           {exam.map((el: any) => (
             <Table.Row key="1">
-              <Table.Cell>{formatClassname(el.summary)}</Table.Cell>
+              <Table.Cell>
+                {formatClassname(shouldBeFormatted(code) ? formatUE(el.summary, code) : el.summary)}
+              </Table.Cell>
               <Table.Cell>
                 {el.start.toLocaleDateString('fr-FR', {
                   weekday: 'long',

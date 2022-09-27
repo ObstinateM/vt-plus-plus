@@ -179,7 +179,7 @@ export function EDT({ code }: { code: string }) {
           css={{ mt: '10px' }}
         />
       </Center>
-      <ExamList exam={nextExam} />
+      <ExamList exam={nextExam} code={code} />
     </>
   );
 }
