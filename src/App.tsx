@@ -64,7 +64,7 @@ function App() {
           href="https://github.com/ObstinateM/vt-plus-plus"
           isExternal
           color="secondary"
-          css={{ pt: '10px' }}
+          css={{ pt: '20px', pb: '20px' }}
         >
           Developped by Mathis "Obstinate" Beauville - See source code
         </Link>
