@@ -12,7 +12,7 @@ interface props {
 
 export function NavbarComp({ changeTheme, deleteCode, code, isLight }: props) {
   return (
-    <Navbar variant="sticky">
+    <Navbar variant="static">
       <Navbar.Brand
         css={{
           '@xs': {
