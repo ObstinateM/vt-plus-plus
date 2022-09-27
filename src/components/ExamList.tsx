@@ -45,7 +45,7 @@ export function ExamList({ exam, code }: any) {
         </Table.Header>
         <Table.Body>
           {exam.map((el: any) => (
-            <Table.Row key="1">
+            <Table.Row key={el.start}>
               <Table.Cell>
                 {formatClassname(shouldBeFormatted(code) ? formatUE(el.summary, code) : el.summary)}
               </Table.Cell>
