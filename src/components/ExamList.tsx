@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Table } from '@nextui-org/react';
+import { Avatar, Badge, Table, Tooltip } from '@nextui-org/react';
 import styled from 'styled-components';
 import { formatClassname, formatHours } from '../utils/format';
 
@@ -18,7 +18,18 @@ export function ExamList({ exam }: any) {
 
   return (
     <MarginDiv>
-      <h3>Vos prochains examens :</h3>
+      <Tooltip
+        content="Note: seul les examens de l'année en cours (non scolaire) sont affichés"
+        placement="rightStart"
+        contentColor="secondary"
+      >
+        <h3>
+          Vos prochains examens
+          <Badge color="secondary" variant="flat" css={{ marginLeft: '5px' }}>
+            ?
+          </Badge>
+        </h3>
+      </Tooltip>
       <Table
         aria-label="Example table with static content"
         css={{
