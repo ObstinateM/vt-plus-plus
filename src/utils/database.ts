@@ -1,6 +1,18 @@
 import ical from 'node-ical';
 import 'setimmediate';
 
+function isExam(className: string) {
+  let str = className.split(' ');
+  let type = str[str.length - 1];
+  return type === 'Examen' || type === 'DS';
+}
+
+function isInFuture(event: any) {
+  if (event.start <= new Date() || event.start.getFullYear() !== new Date().getFullYear())
+    return false;
+  return true;
+}
+
 // Query l'url, parser le ical puis trier par date
 export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
@@ -27,7 +39,6 @@ export function getEDT(code: string) {
   });
 }
 
-// TODO: Fix the bug, when a day isnt filled it wrongly place others
 export function getWeekEvent(edt: any, week: number) {
   // Some dark magic from stackoverflow
   const date = new Date();
@@ -77,4 +88,14 @@ export function getCurrentWeekNumber() {
       ((new Date().getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7
     )
   );
+}
+
+export function getNextExam(edt: any) {
+  const exam: any[] = [];
+
+  Object.values(edt).forEach((el: any) => {
+    if (isExam(el.summary) && isInFuture(el)) exam.push(el);
+  });
+
+  return exam;
 }

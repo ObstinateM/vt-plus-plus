@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Navbar, Link, Text, Switch } from '@nextui-org/react';
+import { Navbar, Text, Switch } from '@nextui-org/react';
 import MoonIcon from '../assets/MoonIcon.svg';
 import SunIcon from '../assets/SunIcon.svg';
 
@@ -12,7 +11,7 @@ interface props {
 
 export function NavbarComp({ changeTheme, deleteCode, code, isLight }: props) {
   return (
-    <Navbar variant="sticky">
+    <Navbar variant="static">
       <Navbar.Brand
         css={{
           '@xs': {

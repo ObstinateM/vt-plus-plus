@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { NextUIProvider, createTheme, Link } from '@nextui-org/react';
+import { NextUIProvider, createTheme, Link, Modal, Text, Button } from '@nextui-org/react';
 import { NavbarComp } from './components/NavbarComp';
 import { EDT } from './components/EDT';
 import { InputCode } from './components/InputCode';
 import { useLocalStorage } from './hooks/useLocalstorage';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useLocalStorageUpdate } from './hooks/useLocalstorageUpdate';
+import { createGlobalStyle } from 'styled-components';
 import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
+import updateInfo from './assets/update.json';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -30,12 +32,22 @@ function App() {
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
   const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
+  const [updateStorage, setUpdateStorage] = useLocalStorageUpdate('update', updateInfo.name);
+  // ! cause the updateStorage shouldn't be undefined
+  const [updateVisible, setUpdateVisible] = useState(
+    updateStorage!.replace('"', '') === `${updateInfo.name}:no`
+  );
   const changeTheme = () => setLightMode(mode => !mode);
 
   const updateCode = (newCode: string, remember: boolean) => {
     newCode = newCode.toLocaleLowerCase();
     setCode(newCode);
     if (remember) setCodeStorage(newCode);
+  };
+
+  const updateClose = () => {
+    setUpdateStorage(`${updateInfo.name}:yes`);
+    setUpdateVisible(false);
   };
 
   useEffect(() => {
@@ -48,6 +60,10 @@ function App() {
     });
   }, []);
 
+  // useEffect(() => {
+  //   // setUpdateVisible();
+  // }, [updateStorage]);
+
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
       <GlobalStyle />
@@ -57,6 +73,26 @@ function App() {
         deleteCode={updateCode}
         isLight={isLightMode}
       />
+      <Modal
+        closeButton
+        aria-labelledby="modal-patchnote"
+        open={updateVisible}
+        onClose={updateClose}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18} b>
+            Note de mis à jour
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{updateInfo.p}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onClick={updateClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {code !== '' && <EDT code={code} />}
       {code === '' && <InputCode setCode={updateCode} />}
       <Center>
@@ -64,7 +100,7 @@ function App() {
           href="https://github.com/ObstinateM/vt-plus-plus"
           isExternal
           color="secondary"
-          css={{ pt: '10px' }}
+          css={{ pt: '20px', pb: '20px' }}
         >
           Developped by Mathis "Obstinate" Beauville - See source code
         </Link>

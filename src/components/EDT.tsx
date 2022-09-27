@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getEDT, getWeekEvent, getEventCoordinates, getCurrentWeekNumber } from '../utils/database';
+import {
+  getEDT,
+  getWeekEvent,
+  getEventCoordinates,
+  getCurrentWeekNumber,
+  getNextExam
+} from '../utils/database';
 import {
   Timetable,
   PlaceItem,
@@ -16,6 +22,7 @@ import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../ut
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
 import { useTheme } from '@nextui-org/react';
+import { ExamList } from './ExamList';
 
 const hours = [
   '8:00',
@@ -76,6 +83,7 @@ export function EDT({ code }: { code: string }) {
   const [weekEvent, setWeekEvent] = useState<any>([]);
   const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
   const [weekDate, setWeekDate] = useState<string[]>([]);
+  const [nextExam, setNextExam] = useState<any[]>([]);
   const { type } = useTheme();
 
   const loadEDT = async () => {
@@ -83,6 +91,7 @@ export function EDT({ code }: { code: string }) {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
       setWeekEvent(getWeekEvent(edt, weekNumber));
+      setNextExam(getNextExam(edt));
     } catch (err) {
       console.log(err);
     }
@@ -170,6 +179,7 @@ export function EDT({ code }: { code: string }) {
           css={{ mt: '10px' }}
         />
       </Center>
+      <ExamList exam={nextExam} code={code} />
     </>
   );
 }
