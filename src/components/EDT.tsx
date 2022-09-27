@@ -22,6 +22,7 @@ import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../ut
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
 import { useTheme } from '@nextui-org/react';
+import { ExamList } from './ExamList';
 
 const hours = [
   '8:00',
@@ -178,6 +179,7 @@ export function EDT({ code }: { code: string }) {
           css={{ mt: '10px' }}
         />
       </Center>
+      <ExamList exam={nextExam} />
     </>
   );
 }
