@@ -12,10 +12,6 @@ const MarginDiv = styled.div`
 `;
 
 export function ExamList({ exam, code }: any) {
-  useEffect(() => {
-    console.log(exam);
-  }, [exam]);
-
   return (
     <MarginDiv>
       <Tooltip
