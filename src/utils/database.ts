@@ -13,7 +13,6 @@ function isInFuture(event: any) {
   return true;
 }
 
-// Query l'url, parser le ical puis trier par date
 export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
     const database: any = [];

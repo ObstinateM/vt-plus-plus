@@ -33,7 +33,6 @@ function App() {
   const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
   const [updateStorage, setUpdateStorage] = useLocalStorageUpdate('update', updateInfo.name);
-  // ! cause the updateStorage shouldn't be undefined
   const [updateVisible, setUpdateVisible] = useState(
     updateStorage!.replace('"', '') === `${updateInfo.name}:no`
   );
@@ -59,10 +58,6 @@ function App() {
       setLightMode(!event.matches);
     });
   }, []);
-
-  // useEffect(() => {
-  //   // setUpdateVisible();
-  // }, [updateStorage]);
 
   return (
     <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>

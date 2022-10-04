@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Dispatch, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Input, Button, Checkbox, Card, Text } from '@nextui-org/react';
 
 interface InputCodeProps {
@@ -8,7 +8,6 @@ interface InputCodeProps {
 
 export function InputCode({ setCode }: InputCodeProps) {
   const newCode = useRef<HTMLFormElement>();
-  // const remind = useRef();
   const [remind, setRemind] = useState(true);
 
   const onSubmit = (form: any) => {

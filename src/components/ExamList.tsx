@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Avatar, Badge, Table, Tooltip } from '@nextui-org/react';
+import { Badge, Table, Tooltip } from '@nextui-org/react';
 import styled from 'styled-components';
 import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 
