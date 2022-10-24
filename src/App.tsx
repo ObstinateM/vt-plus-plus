@@ -18,7 +18,7 @@ const darkTheme = createTheme({
 });
 
 const GlobalStyle = createGlobalStyle`
-  @media screen and (max-height: 1100px) {
+  @media screen and (max-height: 1000px) {
     ${ClassHour} {
       font-size: 8px;
     }
