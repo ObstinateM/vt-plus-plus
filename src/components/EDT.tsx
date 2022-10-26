@@ -23,6 +23,7 @@ import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek } from '../utils/date';
 import { useTheme } from '@nextui-org/react';
 import { ExamList } from './ExamList';
+import config from "../assets/config";
 
 const hours = [
   '8:00',
@@ -76,7 +77,10 @@ const hours = [
   '20:00'
 ];
 
-const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
+if(config.saturday) {
+  days.push("Sam")
+}
 
 export function EDT({ code }: { code: string }) {
   const [edt, setEDT] = useState<any>([]);
@@ -129,7 +133,7 @@ export function EDT({ code }: { code: string }) {
 
   return (
     <>
-      <Timetable type={type}>
+      <Timetable type={type} saturday={config.saturday}>
         <PlaceItemNoStyle gridColumn="1" gridRow="1"></PlaceItemNoStyle>
 
         {days.map((day, index) => (
@@ -165,6 +169,10 @@ export function EDT({ code }: { code: string }) {
                 <ClassHour>
                   {formatHours(event)} ― {event.location}
                 </ClassHour>
+                {config.organizer && 
+                  <ClassHour> {event.organizer} </ClassHour>
+                }
+
               </PlaceItem>
             );
           });

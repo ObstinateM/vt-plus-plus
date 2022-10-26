@@ -1,6 +1,8 @@
 import ical from 'node-ical';
 import 'setimmediate';
 
+import config from '../assets/config';
+
 function isExam(className: string) {
   let str = className.split(' ');
   let type = str[str.length - 1];
@@ -17,7 +19,7 @@ export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
     const database: any = [];
 
-    ical.fromURL(`https://edt-api.obstinate.fr/${code}`, {}, function (err, data) {
+    ical.fromURL(config.ical.replaceAll("{{CODE}}", code), {}, function (err, data) {
       if (err) {
         console.log(err);
         reject(err);
