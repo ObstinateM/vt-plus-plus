@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
-interface borderColor {
+interface TimetableProps {
   type: string;
+  saturday: boolean;
 }
 
-export const Timetable = styled.div<borderColor>`
+export const Timetable = styled.div<TimetableProps>`
   display: grid;
   height: 81vh;
-  grid-template-columns: 30px repeat(6, 3fr);
+  grid-template-columns: 30px repeat(${props => props.saturday ? "6": "5"}, 3fr);
   grid-template-rows: 50px repeat(50, minmax(5px, calc(80vh / 51)));
   grid-column-gap: 4px;
   border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};

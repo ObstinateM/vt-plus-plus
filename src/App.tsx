@@ -8,6 +8,7 @@ import { useLocalStorageUpdate } from './hooks/useLocalstorageUpdate';
 import { createGlobalStyle } from 'styled-components';
 import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
 import updateInfo from './assets/update.json';
+import config from "./assets/config";
 
 const lightTheme = createTheme({
   type: 'light'
@@ -88,8 +89,8 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-      {code !== '' && <EDT code={code} />}
-      {code === '' && <InputCode setCode={updateCode} />}
+      {(!config.useCode || code !== '') && <EDT code={code} />}
+      {(config.useCode && code === '') && <InputCode setCode={updateCode} />}
       <Center>
         <Link
           href="https://github.com/ObstinateM/vt-plus-plus"

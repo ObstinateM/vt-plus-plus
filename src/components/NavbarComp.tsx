@@ -1,10 +1,12 @@
 import { Navbar, Text, Switch } from '@nextui-org/react';
 import MoonIcon from '../assets/MoonIcon.svg';
 import SunIcon from '../assets/SunIcon.svg';
+import config from '../assets/config';
+import { CodeNavbar } from './CodeNavbar';
 
 interface props {
   changeTheme: () => void;
-  deleteCode: (newCode: '', remind: true) => void;
+  deleteCode: (newCode: string, remind: boolean) => void;
   code: string;
   isLight: boolean;
 }
@@ -29,21 +31,7 @@ export function NavbarComp({ changeTheme, deleteCode, code, isLight }: props) {
         hideIn="xs"
         variant="highlight-rounded"
       >
-        {code === '' && (
-          <Navbar.Link isActive href="#">
-            Se connecter
-          </Navbar.Link>
-        )}
-        {code !== '' && (
-          <>
-            <Navbar.Link isActive href="#">
-              {`Emploi du temps : ${code.toLocaleUpperCase()}`}
-            </Navbar.Link>
-            <Navbar.Link onPress={() => deleteCode('', true)} href="#">
-              Changer de code
-            </Navbar.Link>
-          </>
-        )}
+        {config.useCode && <CodeNavbar code={code} deleteCode={deleteCode}/>}
       </Navbar.Content>
       <Navbar.Content
         css={{
