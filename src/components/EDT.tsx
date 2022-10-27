@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  getEDT,
-  getWeekEvent,
-  getEventCoordinates,
-  getCurrentWeekNumber,
-  getNextExam
-} from '../utils/database';
+import { getEDT, getWeekEvent, getNextExam } from '../utils/database';
 import {
   Timetable,
   PlaceItem,
@@ -20,10 +14,11 @@ import {
 import { Pagination } from '@nextui-org/react';
 import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 import { getEventColor } from '../utils/colors';
-import { getDateRangeOfWeek } from '../utils/date';
+import { getDateRangeOfWeek, getCurrentWeekNumber } from '../utils/date';
+import { getEventCoordinates } from '../utils/utils';
 import { useTheme } from '@nextui-org/react';
 import { ExamList } from './ExamList';
-import config from "../assets/config";
+import config from '../assets/config';
 
 const hours = [
   '8:00',
@@ -78,8 +73,8 @@ const hours = [
 ];
 
 const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
-if(config.saturday) {
-  days.push("Sam")
+if (config.saturday) {
+  days.push('Sam');
 }
 
 export function EDT({ code }: { code: string }) {
@@ -169,10 +164,7 @@ export function EDT({ code }: { code: string }) {
                 <ClassHour>
                   {formatHours(event)} ― {event.location}
                 </ClassHour>
-                {config.organizer && 
-                  <ClassHour> {event.organizer} </ClassHour>
-                }
-
+                {config.organizer && <ClassHour> {event.organizer} </ClassHour>}
               </PlaceItem>
             );
           });
