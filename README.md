@@ -18,11 +18,13 @@ Contributions are always welcome!
 
 Just open a PR!
 
-## Author
+## Authors
 
 - [@ObstinateM](https://www.github.com/ObstinateM)
+- [@Ekazuki](https://github.com/ekazukii)
 
 ## Contributors
 
+- [@ekazukii](https://github.com/ekazukii)
 - [@yanisdiga](https://github.com/yanisdiga)
 - [@UncleSamulus](https://github.com/UncleSamulus)
