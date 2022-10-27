@@ -20,9 +20,10 @@ Just open a PR!
 
 ## Author
 
-- [@ObstinateM](https://www.github.com/ObstinateM)
+- [@ObstinateM](https://www.github.com/ekazukii)
 
 ## Contributors
 
+- [@ekazukii](https://github.com/ekazukii)
 - [@yanisdiga](https://github.com/yanisdiga)
 - [@UncleSamulus](https://github.com/UncleSamulus)
