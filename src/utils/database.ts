@@ -31,9 +31,9 @@ export function getEDT(code: string) {
 }
 
 /**
- * Return an Object mapped like 'number of the day in a week' -> Array of events for each day
  * @param {event} edt
  * @param {number} week
+ * @returns {number[evert[]]}
  */
 export function getWeekEvent(edt: any, week: number) {
   // Some dark magic from stackoverflow
