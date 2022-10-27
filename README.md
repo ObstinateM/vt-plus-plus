@@ -18,10 +18,9 @@ Contributions are always welcome!
 
 Just open a PR!
 
-## Authors
+## Author
 
 - [@ObstinateM](https://www.github.com/ObstinateM)
-- [@Ekazuki](https://github.com/ekazukii)
 
 ## Contributors
 

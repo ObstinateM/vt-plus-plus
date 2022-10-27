@@ -8,7 +8,7 @@ import { useLocalStorageUpdate } from './hooks/useLocalstorageUpdate';
 import { createGlobalStyle } from 'styled-components';
 import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
 import updateInfo from './assets/update.json';
-import config from "./assets/config";
+import config from './assets/config';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -19,7 +19,7 @@ const darkTheme = createTheme({
 });
 
 const GlobalStyle = createGlobalStyle`
-  @media screen and (max-height: 1000px) {
+  @media screen and (max-width: 750px) {
     ${ClassHour} {
       font-size: 8px;
     }
@@ -90,7 +90,7 @@ function App() {
         </Modal.Footer>
       </Modal>
       {(!config.useCode || code !== '') && <EDT code={code} />}
-      {(config.useCode && code === '') && <InputCode setCode={updateCode} />}
+      {config.useCode && code === '' && <InputCode setCode={updateCode} />}
       <Center>
         <Link
           href="https://github.com/ObstinateM/vt-plus-plus"
