@@ -18,7 +18,7 @@ import { getDateRangeOfWeek, getCurrentWeekNumber } from '../utils/date';
 import { getEventCoordinates } from '../utils/utils';
 import { useTheme } from '@nextui-org/react';
 import { ExamList } from './ExamList';
-import config from '../assets/config';
+import config, { SaturdayType } from '../assets/config';
 
 const hours = [
   '8:00',
@@ -72,24 +72,34 @@ const hours = [
   '20:00'
 ];
 
-const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
-if (config.saturday) {
-  days.push('Sam');
-}
+// let days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
+// if ((config.saturday as SaturdayType) !== SaturdayType.disable) {
+//   days.push('Sam');
+// }
 
 export function EDT({ code }: { code: string }) {
   const [edt, setEDT] = useState<any>([]);
-  const [weekEvent, setWeekEvent] = useState<any>([]);
+  const [weekEvent, setWeekEvent] = useState<any[]>([[], [], [], [], [], []]);
   const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
   const [weekDate, setWeekDate] = useState<string[]>([]);
   const [nextExam, setNextExam] = useState<any[]>([]);
+  const [days, setDays] = useState<string[]>([]);
   const { type } = useTheme();
 
   const loadEDT = async () => {
     try {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
-      setWeekEvent(getWeekEvent(edt, weekNumber));
+
+      const tmp = getWeekEvent(edt, weekNumber);
+
+      if ((config.saturday as SaturdayType) === SaturdayType.enable || tmp[5].length > 5) {
+        setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sat']);
+      } else {
+        setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']);
+      }
+
+      setWeekEvent(tmp);
       setNextExam(getNextExam(edt));
     } catch (err) {
       console.log(err);
@@ -122,13 +132,26 @@ export function EDT({ code }: { code: string }) {
   }, []);
 
   useEffect(() => {
-    setWeekEvent(getWeekEvent(edt, weekNumber));
+    const tmp = getWeekEvent(edt, weekNumber);
+
+    if ((config.saturday as SaturdayType) === SaturdayType.enable || tmp[5].length > 5) {
+      setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sat']);
+    } else {
+      setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']);
+    }
+
+    setWeekEvent(tmp);
     setWeekDate(getDateRangeOfWeek(weekNumber));
   }, [weekNumber]);
 
   return (
     <>
-      <Timetable type={type} saturday={config.saturday}>
+      <Timetable
+        type={type}
+        saturday={
+          (config.saturday as SaturdayType) === SaturdayType.enable || weekEvent[5].length > 5
+        }
+      >
         <PlaceItemNoStyle gridColumn="1" gridRow="1"></PlaceItemNoStyle>
 
         {days.map((day, index) => (
