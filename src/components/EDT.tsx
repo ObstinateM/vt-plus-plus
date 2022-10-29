@@ -72,11 +72,6 @@ const hours = [
   '20:00'
 ];
 
-// let days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
-// if ((config.saturday as SaturdayType) !== SaturdayType.disable) {
-//   days.push('Sam');
-// }
-
 export function EDT({ code }: { code: string }) {
   const [edt, setEDT] = useState<any>([]);
   const [weekEvent, setWeekEvent] = useState<any[]>([[], [], [], [], [], []]);
@@ -91,15 +86,17 @@ export function EDT({ code }: { code: string }) {
       const edt = await getEDT(code.toLowerCase());
       setEDT(edt);
 
-      const tmp = getWeekEvent(edt, weekNumber);
+      const weekE = getWeekEvent(edt, weekNumber);
+      const isSaturdayEnabled = (config.saturday as SaturdayType) === SaturdayType.enable;
+      const isSaturdayInAuto = (config.saturday as SaturdayType) === SaturdayType.auto;
 
-      if ((config.saturday as SaturdayType) === SaturdayType.enable || tmp[5].length > 5) {
+      if (isSaturdayEnabled || (isSaturdayInAuto && weekE[5].length > 0)) {
         setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sat']);
       } else {
         setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']);
       }
 
-      setWeekEvent(tmp);
+      setWeekEvent(weekE);
       setNextExam(getNextExam(edt));
     } catch (err) {
       console.log(err);
@@ -132,15 +129,17 @@ export function EDT({ code }: { code: string }) {
   }, []);
 
   useEffect(() => {
-    const tmp = getWeekEvent(edt, weekNumber);
+    const weekE = getWeekEvent(edt, weekNumber);
+    const isSaturdayEnabled = (config.saturday as SaturdayType) === SaturdayType.enable;
+    const isSaturdayInAuto = (config.saturday as SaturdayType) === SaturdayType.auto;
 
-    if ((config.saturday as SaturdayType) === SaturdayType.enable || tmp[5].length > 5) {
+    if (isSaturdayEnabled || (isSaturdayInAuto && weekE[5].length > 0)) {
       setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sat']);
     } else {
       setDays(['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']);
     }
 
-    setWeekEvent(tmp);
+    setWeekEvent(weekE);
     setWeekDate(getDateRangeOfWeek(weekNumber));
   }, [weekNumber]);
 
@@ -149,7 +148,8 @@ export function EDT({ code }: { code: string }) {
       <Timetable
         type={type}
         saturday={
-          (config.saturday as SaturdayType) === SaturdayType.enable || weekEvent[5].length > 5
+          (config.saturday as SaturdayType) === SaturdayType.enable ||
+          ((config.saturday as SaturdayType) === SaturdayType.auto && weekEvent[5].length > 0)
         }
       >
         <PlaceItemNoStyle gridColumn="1" gridRow="1"></PlaceItemNoStyle>

@@ -3,7 +3,7 @@ import 'setimmediate';
 import { getWeekNumber } from './date';
 import { isExam, isInFuture } from './utils';
 
-import config from '../assets/config';
+import config, { SaturdayType } from '../assets/config';
 
 export function getEDT(code: string) {
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ export function getEDT(code: string) {
 /**
  * @param {event} edt
  * @param {number} week
- * @returns {number[evert[]]}
+ * @returns {number[Event[]]}
  */
 export function getWeekEvent(edt: any, week: number) {
   // Some dark magic from stackoverflow
@@ -52,7 +52,13 @@ export function getWeekEvent(edt: any, week: number) {
       { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
     );
 
-  return Object.keys(temp).map((date: any) => temp[date]);
+  const weekEvent = Object.keys(temp).map((date: any) => temp[date]);
+
+  if ((config.saturday as SaturdayType) === SaturdayType.disable) {
+    weekEvent[5] = [];
+  }
+
+  return weekEvent;
 }
 
 export function getNextExam(edt: any) {
