@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 ENV NODE_ENV=production
-CMD ["npm", "run", "build"]
+RUN npm run build
 
 FROM nginx:1.19
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
