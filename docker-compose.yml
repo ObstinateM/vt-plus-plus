@@ -1,0 +1,8 @@
+version: '3'
+services:
+    vt-plus-plus:
+        image: docker.obstinate.fr/vt-plus-plus
+        container_name: vt-plus-plus
+        ports:
+            - 3000:80
+        restart: unless-stopped
