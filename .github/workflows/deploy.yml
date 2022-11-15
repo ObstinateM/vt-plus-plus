@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: docker.obstinate.fr
-  IMAGE_NAME: docker-test
+  IMAGE_NAME: vt-plus-plus
 
 jobs:
   deploy:
