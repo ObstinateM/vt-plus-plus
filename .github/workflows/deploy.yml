@@ -3,8 +3,6 @@ name: Auto publish the docker image
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 env:
   REGISTRY: docker.obstinate.fr
