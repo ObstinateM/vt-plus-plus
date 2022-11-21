@@ -1,13 +1,13 @@
-import { Navbar } from "@nextui-org/react";
+import { Navbar } from '@nextui-org/react';
 
 export function CodeNavbar({
   code,
-  deleteCode,
+  deleteCode
 }: {
   code: string;
   deleteCode: (s: string, b: boolean) => void;
 }) {
-  if (code === "") {
+  if (code === '') {
     return (
       <Navbar.Link isActive href="#">
         Se connecter
@@ -19,7 +19,7 @@ export function CodeNavbar({
         <Navbar.Link isActive href="#">
           {`Emploi du temps : ${code.toLocaleUpperCase()}`}
         </Navbar.Link>
-        <Navbar.Link onPress={() => deleteCode("", true)} href="#">
+        <Navbar.Link onClick={() => deleteCode('', true)} href="#">
           Changer de code
         </Navbar.Link>
       </>
