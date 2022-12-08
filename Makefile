@@ -19,16 +19,19 @@ build: ## Build the version image
 	@echo "Docker image builded"
 
 tag-latest: ## Rename the docker version image to latest
-	docker tag $(DOCKER_REPO)/$(APPNAME):$(VERSION) $(DOCKER_REPO)/$(APPNAME):latest
+	docker tag $(DOCKER_REPO)/$(APPNAME) $(DOCKER_REPO)/$(APPNAME):latest
+
+tag-version: ## Rename the docker version image to latest
+	docker tag $(DOCKER_REPO)/$(APPNAME) $(DOCKER_REPO)/$(APPNAME):$(VERSION)
 
 login: ## Login to the docker registry
 	# " on the password prevent some characters to escape the field
 	docker login -u $(DOCKER_USERNAME) -p "$(DOCKER_PASSWORD)" $(DOCKER_REPO)
 
-publish: build login ## Publish the actual version
+publish: build tag-version login ## Publish the actual version
 	docker push $(DOCKER_REPO)/$(APPNAME):$(VERSION) 
 
-publish-lastest: publish tag-latest ## Publish the actual version and the latest
+publish-latest: publish tag-latest ## Publish the actual version and the latest
 	docker push $(DOCKER_REPO)/$(APPNAME):latest
 
 run: ## Run the container (make sure to build before)
