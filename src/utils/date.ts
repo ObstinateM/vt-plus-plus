@@ -62,3 +62,8 @@ export function getCurrentWeekNumber() {
     )
   );
 }
+
+export function getCurrentDayNumber() {
+  const tmp = new Date().getDay();
+  return tmp;
+}

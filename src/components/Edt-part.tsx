@@ -5,9 +5,22 @@ interface TimetableProps {
   saturday: boolean;
 }
 
+interface DayTimetableProps {
+  type: string;
+}
+
 export const Timetable = styled.div<TimetableProps>`
   display: grid;
   grid-template-columns: 30px repeat(${props => (props.saturday ? '6' : '5')}, 3fr);
+  grid-template-rows: 50px repeat(48, minmax(5px, calc(80vh / 50)));
+  grid-column-gap: 4px;
+  border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};
+  border-bottom: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};
+`;
+
+export const DayTimetable = styled.div<DayTimetableProps>`
+  display: grid;
+  grid-template-columns: 30px 1fr;
   grid-template-rows: 50px repeat(48, minmax(5px, calc(80vh / 50)));
   grid-column-gap: 4px;
   border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};

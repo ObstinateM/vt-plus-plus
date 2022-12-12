@@ -9,6 +9,8 @@ import { createGlobalStyle } from 'styled-components';
 import { Center, ClassHour, ClassNameDisplay } from './components/Edt-part';
 import updateInfo from './assets/update.json';
 import config from './assets/config';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import DayView from './components/DayView';
 
 const lightTheme = createTheme({
   type: 'light'
@@ -30,6 +32,38 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const [isLightMode, setLightMode] = useState(true);
+  const changeTheme = () => setLightMode(mode => !mode);
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setLightMode(false);
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      setLightMode(!event.matches);
+    });
+  }, []);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <EdtFull />
+    },
+    {
+      path: '/inte/',
+      element: <DayView />
+    }
+  ]);
+
+  return (
+    <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
+      <RouterProvider router={router} />
+    </NextUIProvider>
+  );
+}
+
+// TODO: move this shit in a separate file
+function EdtFull() {
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
   const [code, setCode] = useState(codeStorage);
   const [isLightMode, setLightMode] = useState(true);
@@ -49,19 +83,8 @@ function App() {
     setUpdateStorage(`${updateInfo.name}:yes`);
     setUpdateVisible(false);
   };
-
-  useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setLightMode(false);
-    }
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      setLightMode(!event.matches);
-    });
-  }, []);
-
   return (
-    <NextUIProvider theme={isLightMode ? lightTheme : darkTheme}>
+    <>
       <GlobalStyle />
       <NavbarComp
         changeTheme={changeTheme}
@@ -69,6 +92,8 @@ function App() {
         deleteCode={updateCode}
         isLight={isLightMode}
       />
+      {(!config.useCode || code !== '') && <EDT code={code} />}
+      {config.useCode && code === '' && <InputCode setCode={updateCode} />}
       <Modal
         closeButton
         aria-labelledby="modal-patchnote"
@@ -89,8 +114,6 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-      {(!config.useCode || code !== '') && <EDT code={code} />}
-      {config.useCode && code === '' && <InputCode setCode={updateCode} />}
       <Center>
         <Link
           href="https://github.com/ObstinateM/vt-plus-plus"
@@ -101,7 +124,7 @@ function App() {
           Developped by Mathis "Obstinate" Beauville - See source code
         </Link>
       </Center>
-    </NextUIProvider>
+    </>
   );
 }
 
