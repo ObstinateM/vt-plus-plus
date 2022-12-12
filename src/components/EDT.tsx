@@ -20,7 +20,7 @@ import { useTheme } from '@nextui-org/react';
 import { ExamList } from './ExamList';
 import config, { SaturdayType } from '../assets/config';
 
-const hours = [
+export const hours = [
   '8:00',
   '8:15',
   '8:30',
