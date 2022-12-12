@@ -24,28 +24,29 @@ function DayView() {
   const [weekEvent, setWeekEvent] = useState<any[]>([[], [], [], [], [], []]);
   const [weekDate, setWeekDate] = useState<string[]>([]);
   const [dayNumber, setDayNumber] = useState<number>(getCurrentDayNumber());
+  const [code, setCode] = useState<string>('');
   const weekNumber = getCurrentWeekNumber();
   let edt: any = null;
-
-  let code = '';
 
   const { type } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    code = searchParams.get('code') ?? '';
+    setCode(searchParams.get('code') ?? '');
     setWeekDate(getDateRangeOfWeek(weekNumber));
-
-    loadData();
   }, []);
 
-  async function loadData() {
-    if (!code) {
-      return <p>Provie a code: loadData</p>;
-    }
+  useEffect(() => {
+    loadData();
+  }, [code]);
 
+  async function loadData() {
     edt = await getEDT(code);
     setWeekEvent(getWeekEvent(edt, weekNumber));
+  }
+
+  if (code === '') {
+    return <p>Please provide a code</p>;
   }
 
   return (
