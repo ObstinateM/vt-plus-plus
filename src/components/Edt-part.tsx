@@ -7,6 +7,7 @@ interface TimetableProps {
 
 interface DayTimetableProps {
   type: string;
+  showHours: boolean;
 }
 
 export const Timetable = styled.div<TimetableProps>`
@@ -20,7 +21,7 @@ export const Timetable = styled.div<TimetableProps>`
 
 export const DayTimetable = styled.div<DayTimetableProps>`
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: ${props => (props.showHours ? '30px' : '0')} 1fr;
   grid-template-rows: 50px repeat(48, minmax(10px, calc(80vh / 50)));
   grid-column-gap: 4px;
   border-top: 1px solid ${props => (props.type === 'light' ? '#000' : '#fff')};

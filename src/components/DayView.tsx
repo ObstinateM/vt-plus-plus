@@ -25,6 +25,7 @@ function DayView() {
   const [weekDate, setWeekDate] = useState<string[]>([]);
   const [dayNumber, setDayNumber] = useState<number>(getCurrentDayNumber());
   const [code, setCode] = useState<string>('');
+  const [showHours, setShowHours] = useState<boolean>(false);
   const weekNumber = getCurrentWeekNumber();
   let edt: any = null;
 
@@ -32,6 +33,7 @@ function DayView() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    setShowHours(searchParams.get('hours') ? true : false);
     setCode(searchParams.get('code') ?? '');
     setWeekDate(getDateRangeOfWeek(weekNumber));
   }, []);
@@ -51,17 +53,18 @@ function DayView() {
 
   return (
     <>
-      <DayTimetable type={type}>
+      <DayTimetable type={type} showHours={showHours}>
         <PlaceItemCenter gridColumn={2} gridRow="1">
           {day[dayNumber - 1]}
           <b>{weekDate[dayNumber - 1]}</b>
         </PlaceItemCenter>
 
-        {hours.map((hour, index) => (
-          <PlaceItemHours gridColumn="1" gridRow={index + 2} key={index} type={type}>
-            <Hours>{hour}</Hours>
-          </PlaceItemHours>
-        ))}
+        {showHours &&
+          hours.map((hour, index) => (
+            <PlaceItemHours gridColumn="1" gridRow={index + 2} key={index} type={type}>
+              <Hours>{hour}</Hours>
+            </PlaceItemHours>
+          ))}
 
         {weekEvent[dayNumber - 1].map((event: any) => {
           const { startCoord, endCoord } = getEventCoordinates(event);
