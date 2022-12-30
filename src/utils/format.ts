@@ -105,3 +105,8 @@ export function formatClassname(summary: string) {
   if (splitted[0].length < 25) return summary;
   return splitted[0].slice(0, 25) + (splitted[1] ? '... - ' + splitted[1] : '...');
 }
+export function rangeHour(event: any) {
+  return (
+    (event.end.getHours() - event.start.getHours()) * 60 + Math.abs(event.end.getMinutes() - event.start.getMinutes())
+  );
+}
