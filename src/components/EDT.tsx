@@ -12,7 +12,7 @@ import {
   Center
 } from './Edt-part';
 import { Pagination } from '@nextui-org/react';
-import { formatClassname, formatHours, formatUE, rangeHour, shouldBeFormatted } from '../utils/format';
+import { formatClassname, formatHours, formatUE, shouldBeFormatted } from '../utils/format';
 import { getEventColor } from '../utils/colors';
 import { getDateRangeOfWeek, getCurrentWeekNumber } from '../utils/date';
 import { getEventCoordinates } from '../utils/utils';
@@ -104,7 +104,9 @@ export function EDT({ code }: { code: string }) {
   };
 
   const changeWeek = (number: number): void => {
-    setWeekNumber(actual => (actual + number < 1 || actual + number > 52 ? actual : actual + number));
+    setWeekNumber(actual =>
+      actual + number < 1 || actual + number > 52 ? actual : actual + number
+    );
   };
 
   useEffect(() => {
@@ -177,15 +179,13 @@ export function EDT({ code }: { code: string }) {
                 gridRow={`${startCoord} / ${endCoord}`}
                 key={event.id}
               >
-                {rangeHour(event) >= 90 ? (
-                  <ClassNameDisplay>
-                    {formatClassname(shouldBeFormatted(code) ? formatUE(event.summary, code) : event.summary)}
-                  </ClassNameDisplay>
-                ) : (
-                  false
-                )}
+                <ClassNameDisplay>
+                  {formatClassname(
+                    shouldBeFormatted(code) ? formatUE(event.summary, code) : event.summary
+                  )}
+                </ClassNameDisplay>
                 <ClassHour>
-                  {formatHours(event)} ― {event.location} - {formatUE(event.summary, code)}
+                  {formatHours(event)} ― {event.location}
                 </ClassHour>
                 {config.organizer && <ClassHour> {event.organizer} </ClassHour>}
               </PlaceItem>

@@ -45,7 +45,7 @@ interface PlaceItemPropsColor {
   bgColor: string;
   borderColor: string;
 }
-//Course subjects
+
 export const PlaceItem = styled.div<PlaceItemPropsColor>`
   grid-column: ${props => props.gridColumn};
   grid-row: ${props => props.gridRow};
@@ -104,7 +104,4 @@ export const ClassHour = styled.p`
 export const Center = styled.div`
   display: flex;
   justify-content: center;
-`;
-export const reduceItem = styled.p<JSX.IntrinsicElements>`
-  display: flex;
 `;
