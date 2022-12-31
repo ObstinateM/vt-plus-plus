@@ -1,3 +1,5 @@
+import { createPath } from 'react-router-dom';
+
 interface ueObject {
   [key: string]: string;
 }
@@ -104,4 +106,9 @@ export function formatClassname(summary: string) {
   const splitted = summary.split(' - ');
   if (splitted[0].length < 25) return summary;
   return splitted[0].slice(0, 25) + (splitted[1] ? '... - ' + splitted[1] : '...');
+}
+export function rangeHour(event: any) {
+  let hourDiff = event.end.getHours() - event.start.getHours();
+  if (event.end.getMinutes() == 0 && event.start.getMinutes() == 30 && hourDiff == 1) return 30;
+  return hourDiff * 60 + Math.abs(event.end.getMinutes() - event.start.getMinutes());
 }
