@@ -47,7 +47,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <EdtFull />
+      element: <EdtFull changeTheme={changeTheme} isLightMode={isLightMode} />
     },
     {
       path: '/inte/',
@@ -63,15 +63,13 @@ function App() {
 }
 
 // TODO: move this shit in a separate file
-function EdtFull() {
+function EdtFull({ changeTheme, isLightMode }: { changeTheme: () => void; isLightMode: boolean }) {
   const [codeStorage, setCodeStorage] = useLocalStorage('code', '');
   const [code, setCode] = useState(codeStorage);
-  const [isLightMode, setLightMode] = useState(true);
   const [updateStorage, setUpdateStorage] = useLocalStorageUpdate('update', updateInfo.name);
   const [updateVisible, setUpdateVisible] = useState(
     updateStorage!.replace('"', '') === `${updateInfo.name}:no`
   );
-  const changeTheme = () => setLightMode(mode => !mode);
 
   const updateCode = (newCode: string, remember: boolean) => {
     newCode = newCode.toLocaleLowerCase();
