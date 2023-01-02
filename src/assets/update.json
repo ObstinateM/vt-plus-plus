@@ -1,4 +1,4 @@
 {
-  "name": "notion:hours",
+  "name": "notion",
   "p": "Vous pouvez désormais intégrer l'emploi du temps dans notion avec l'url : https://edt.obstinate.fr/inte?code=<votre code>\nIl est aussi possible d'ajouter les heures sur la gauche comme ceci : https://edt.obstinate.fr/inte?code=<votre code>&hours=true"
 }
