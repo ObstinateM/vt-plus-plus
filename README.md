@@ -25,5 +25,6 @@ Just open a PR!
 ## Contributors
 
 - [@ekazukii](https://github.com/ekazukii)
+- [@Logorrheique](https://github.com/Logorrheique)
 - [@yanisdiga](https://github.com/yanisdiga)
 - [@UncleSamulus](https://github.com/UncleSamulus)
