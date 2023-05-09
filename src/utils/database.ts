@@ -25,11 +25,13 @@ export function getEDT(code: string) {
       }
 
       const fetes = getFetes(new Date().getFullYear());
+      const END_MIN = 45 * 60 * 1000;
+      const END_HOURS = 19 * 60 * 60 * 1000;
       for (let [name, date] of Object.entries(fetes)) {
         database.push({
           type: 'VEVENT',
           start: new Date(date.getTime() + 8 * 60 * 60 * 1000),
-          end: new Date(date.getTime() + 20 * 60 * 60 * 1000),
+          end: new Date(date.getTime() + END_HOURS + END_MIN),
           summary: name,
           location: 'France'
         });
