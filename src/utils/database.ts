@@ -1,6 +1,6 @@
 import ical from 'node-ical';
 import 'setimmediate';
-import { getWeekNumber } from './date';
+import { getFetes, getWeekNumber } from './date';
 import { isExam, isInFuture } from './utils';
 
 import config, { SaturdayType } from '../assets/config';
@@ -24,6 +24,16 @@ export function getEDT(code: string) {
         }
       }
 
+      const fetes = getFetes(new Date().getFullYear());
+      for (let [name, date] of Object.entries(fetes)) {
+        database.push({
+          type: 'VEVENT',
+          start: new Date(date.getTime() + 8 * 60 * 60 * 1000),
+          end: new Date(date.getTime() + 20 * 60 * 60 * 1000),
+          summary: name,
+          location: 'France'
+        });
+      }
       const calendar = database.sort((a: any, b: any) => a.start.getTime() - b.start.getTime());
       resolve(calendar);
     });
