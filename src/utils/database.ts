@@ -1,45 +1,110 @@
-import ical from 'node-ical';
-import 'setimmediate';
-import { getFetes, getWeekNumber } from './date';
-import { isExam, isInFuture } from './utils';
+import ical, { VEvent } from "node-ical";
+import "setimmediate";
+import { getFetes, getWeekNumber } from "./date";
 
-import config, { SaturdayType } from '../assets/config';
+import { EDTType, Event } from "../@types/database";
+import config, { SaturdayType } from "../assets/config";
+import { isExam, isInFuture, isInSchoolYear } from "./utils";
 
 export function getEDT(code: string) {
-  return new Promise((resolve, reject) => {
-    const database: any = [];
+    return new Promise((resolve, reject) => {
+        const database: any = [];
 
-    ical.fromURL(config.ical.replaceAll('{{CODE}}', code), {}, function (err, data) {
-      if (err) {
-        console.log(err);
-        reject(err);
-      }
+        ical.fromURL(config.ical.replaceAll("{{CODE}}", code), {}, function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
 
-      for (let k in data) {
-        if (data.hasOwnProperty(k)) {
-          const ev = data[k];
-          if (data[k].type == 'VEVENT') {
-            database.push(ev);
-          }
-        }
-      }
+            for (let k in data) {
+                if (data.hasOwnProperty(k)) {
+                    const ev = data[k];
+                    if (data[k].type == "VEVENT") {
+                        database.push(ev);
+                    }
+                }
+            }
 
-      const fetes = getFetes(new Date().getFullYear());
-      const END_MIN = 45 * 60 * 1000;
-      const END_HOURS = 19 * 60 * 60 * 1000;
-      for (let [name, date] of Object.entries(fetes)) {
-        database.push({
-          type: 'VEVENT',
-          start: new Date(date.getTime() + 8 * 60 * 60 * 1000),
-          end: new Date(date.getTime() + END_HOURS + END_MIN),
-          summary: name,
-          location: 'France'
+            const fetes = getFetes(new Date().getFullYear());
+            const END_MIN = 45 * 60 * 1000;
+            const END_HOURS = 19 * 60 * 60 * 1000;
+            for (let [name, date] of Object.entries(fetes)) {
+                database.push({
+                    type: "VEVENT",
+                    start: new Date(date.getTime() + 8 * 60 * 60 * 1000),
+                    end: new Date(date.getTime() + END_HOURS + END_MIN),
+                    summary: name,
+                    location: "France",
+                });
+            }
+            const calendar = database.sort(
+                (a: any, b: any) => a.start.getTime() - b.start.getTime(),
+            );
+            resolve(calendar);
         });
-      }
-      const calendar = database.sort((a: any, b: any) => a.start.getTime() - b.start.getTime());
-      resolve(calendar);
     });
-  });
+}
+
+export function getYearEdt(code: string): Promise<EDTType> {
+    return new Promise((resolve, reject) => {
+        const database: EDTType = [];
+
+        ical.fromURL(config.ical.replaceAll("{{CODE}}", code), {}, function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+
+            for (let k in data) {
+                if (data.hasOwnProperty(k)) {
+                    const ev = data[k] as VEvent;
+                    if (data[k].type == "VEVENT") {
+                        const year = ev.start.getFullYear();
+                        if (!database[year]) database[year] = [];
+                        database[year].push({
+                            start: ev.start,
+                            end: ev.end,
+                            summary: ev.summary,
+                            location: ev.location,
+                            organizer: String(ev.organizer),
+                        });
+                    }
+                }
+            }
+
+            const currentYear = new Date().getFullYear();
+            addFete(database, currentYear - 1);
+            addFete(database, currentYear);
+            addFete(database, currentYear + 1);
+
+            sortEvent(database, currentYear - 1);
+            sortEvent(database, currentYear);
+            sortEvent(database, currentYear + 1);
+
+            resolve(database);
+        });
+    });
+}
+
+function addFete(database: EDTType, year: number) {
+    if (!database[year]) return;
+    const fetes = getFetes(year);
+    const END_MIN = 45 * 60 * 1000;
+    const END_HOURS = 19 * 60 * 60 * 1000;
+    for (let [name, date] of Object.entries(fetes)) {
+        database[year].push({
+            start: new Date(date.getTime() + 8 * 60 * 60 * 1000) as any,
+            end: new Date(date.getTime() + END_HOURS + END_MIN) as any,
+            summary: name,
+            location: "France",
+            organizer: "",
+        });
+    }
+}
+
+function sortEvent(database: EDTType, year: number) {
+    if (!database[year]) return;
+    database[year].sort((a, b) => a.start.getTime() - b.start.getTime());
 }
 
 /**
@@ -47,38 +112,43 @@ export function getEDT(code: string) {
  * @param {number} week
  * @returns {number[Event[]]}
  */
-export function getWeekEvent(edt: any, week: number) {
-  // Some dark magic from stackoverflow
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+export function getWeekEvent(edt: EDTType, week: number, year: number) {
+    // Some dark magic from stackoverflow
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
 
-  const temp = edt
-    .filter((event: any) => getWeekNumber(event) === week)
-    .reduce(
-      (acc: any, event: any) => {
-        const day = event.start.getDay();
-        acc[day].push(event);
-        return acc;
-      },
-      { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
-    );
+    if (edt[year] === undefined) return [[], [], [], [], [], []];
+    const temp = edt[year]
+        .filter((event) => getWeekNumber(event, year) === week)
+        .reduce(
+            (acc: any, event: any) => {
+                const day = event.start.getDay();
+                if (!day) return acc;
+                acc[day].push(event);
+                return acc;
+            },
+            { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
+        );
 
-  const weekEvent = Object.keys(temp).map((date: any) => temp[date]);
+    const weekEvent = Object.keys(temp).map((date: any) => temp[date]);
 
-  if ((config.saturday as SaturdayType) === SaturdayType.disable) {
-    weekEvent[5] = [];
-  }
+    if ((config.saturday as SaturdayType) === SaturdayType.disable) {
+        weekEvent[5] = [];
+    }
 
-  return weekEvent;
+    return weekEvent;
 }
 
-export function getNextExam(edt: any) {
-  const exam: any[] = [];
+export function getNextExam(edt: EDTType) {
+    // const exam: Event[] = [];
 
-  Object.values(edt).forEach((el: any) => {
-    if (isExam(el.summary) && isInFuture(el)) exam.push(el);
-  });
+    // Object.values(edt).forEach((el) => {
+    //     if (isExam(el.summary) && isInFuture(el) && isInSchoolYear(el)) exam.push(el);
+    // });
+    const exam = Object.values(edt)
+        .flat()
+        .filter((el) => isExam(el.summary) && isInFuture(el) && isInSchoolYear(el));
 
-  return exam;
+    return exam;
 }
