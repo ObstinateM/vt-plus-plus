@@ -87,6 +87,7 @@ export function getYearEdt(code: string): Promise<EDTType> {
 }
 
 function addFete(database: EDTType, year: number) {
+    if (!database[year]) return;
     const fetes = getFetes(year);
     const END_MIN = 45 * 60 * 1000;
     const END_HOURS = 19 * 60 * 60 * 1000;
@@ -102,6 +103,7 @@ function addFete(database: EDTType, year: number) {
 }
 
 function sortEvent(database: EDTType, year: number) {
+    if (!database[year]) return;
     database[year].sort((a, b) => a.start.getTime() - b.start.getTime());
 }
 
@@ -112,11 +114,11 @@ function sortEvent(database: EDTType, year: number) {
  */
 export function getWeekEvent(edt: EDTType, week: number, year: number) {
     // Some dark magic from stackoverflow
-    console.log(edt);
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
 
+    if (edt[year] === undefined) return [[], [], [], [], [], []];
     const temp = edt[year]
         .filter((event) => getWeekNumber(event, year) === week)
         .reduce(
