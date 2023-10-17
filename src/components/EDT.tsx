@@ -1,4 +1,4 @@
-import { Button, Pagination, useTheme } from "@nextui-org/react";
+import { Button, Dropdown, Pagination, useTheme } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { EDTType } from "../@types/database";
 import config, { SaturdayType } from "../assets/config";
@@ -79,14 +79,20 @@ export const hours = [
 ];
 
 export function EDT({ code }: { code: string }) {
+    const currentYear = new Date().getFullYear();
     const [edt, setEDT] = useState<EDTType | null>(null);
     const [weekEvent, setWeekEvent] = useState<any[]>([[], [], [], [], [], []]);
     const [weekNumber, setWeekNumber] = useState<number>(getCurrentWeekNumber());
-    const [year, setYear] = useState(new Date().getFullYear());
+    const [year, setYear] = useState(currentYear);
     const [weekDate, setWeekDate] = useState<string[]>([]);
     const [nextExam, setNextExam] = useState<any[]>([]);
     const [days, setDays] = useState<string[]>([]);
     const { type } = useTheme();
+
+    const setYearProxy = (_year: any) => {
+        const tmp = _year.entries().next().value;
+        setYear(tmp[0]);
+    };
 
     // Get the current week event, set it has state for UI
     // and handle the saturday config
@@ -139,6 +145,7 @@ export function EDT({ code }: { code: string }) {
 
             if (event.key === "ArrowUp" || event.key === "ArrowDown") {
                 setWeekNumber(getCurrentWeekNumber());
+                setYear(currentYear);
             }
         });
     }, []);
@@ -146,6 +153,10 @@ export function EDT({ code }: { code: string }) {
     useEffect(() => {
         updateWeekEvent();
     }, [weekNumber]);
+
+    useEffect(() => {
+        updateWeekEvent();
+    }, [year]);
 
     useEffect(() => {
         if (!edt) return;
@@ -222,7 +233,13 @@ export function EDT({ code }: { code: string }) {
                 })}
             </Timetable>
             <Center>
-                <Button auto light css={{ mt: "6px" }} color="secondary">
+                <Button
+                    auto
+                    light
+                    css={{ mt: "6px" }}
+                    color="secondary"
+                    onPress={() => onWeekChange(-1)}
+                >
                     &#60;
                 </Button>
                 <Pagination
@@ -233,10 +250,46 @@ export function EDT({ code }: { code: string }) {
                     onChange={(number: number) => setWeekNumber(number)}
                     css={{ mt: "10px" }}
                 />
-                <Button auto light css={{ mt: "6px" }} color="secondary">
+                <Button
+                    auto
+                    light
+                    css={{ mt: "6px" }}
+                    color="secondary"
+                    onPress={() => onWeekChange(1)}
+                >
                     &#62;
                 </Button>
-                {year}
+                <div style={{ marginTop: "10px", marginLeft: "10px" }}>
+                    <Dropdown>
+                        <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                            {year}
+                        </Dropdown.Button>
+                        <Dropdown.Menu
+                            aria-label="Single selection actions"
+                            color="secondary"
+                            disallowEmptySelection
+                            selectionMode="single"
+                            selectedKeys={[currentYear, currentYear - 1, currentYear + 1]}
+                            onSelectionChange={setYearProxy}
+                        >
+                            <Dropdown.Item
+                                textValue={String(currentYear - 1)}
+                                key={currentYear - 1}
+                            >
+                                {currentYear - 1}
+                            </Dropdown.Item>
+                            <Dropdown.Item textValue={String(currentYear)} key={currentYear}>
+                                {currentYear}
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                textValue={String(currentYear + 1)}
+                                key={currentYear + 1}
+                            >
+                                {currentYear + 1}
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
             </Center>
             <ExamList exam={nextExam} code={code} />
         </>
