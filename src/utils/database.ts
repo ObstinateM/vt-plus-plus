@@ -1,10 +1,10 @@
 import ical, { VEvent } from "node-ical";
 import "setimmediate";
 import { getFetes, getWeekNumber } from "./date";
-import { isExam, isInFuture } from "./utils";
 
 import { EDTType, Event } from "../@types/database";
 import config, { SaturdayType } from "../assets/config";
+import { isExam, isInFuture, isInSchoolYear } from "./utils";
 
 export function getEDT(code: string) {
     return new Promise((resolve, reject) => {
@@ -140,12 +140,15 @@ export function getWeekEvent(edt: EDTType, week: number, year: number) {
     return weekEvent;
 }
 
-export function getNextExam(edt: any) {
-    const exam: any[] = [];
+export function getNextExam(edt: EDTType) {
+    // const exam: Event[] = [];
 
-    Object.values(edt).forEach((el: any) => {
-        if (isExam(el.summary) && isInFuture(el)) exam.push(el);
-    });
+    // Object.values(edt).forEach((el) => {
+    //     if (isExam(el.summary) && isInFuture(el) && isInSchoolYear(el)) exam.push(el);
+    // });
+    const exam = Object.values(edt)
+        .flat()
+        .filter((el) => isExam(el.summary) && isInFuture(el) && isInSchoolYear(el));
 
     return exam;
 }

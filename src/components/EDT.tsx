@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { EDTType } from "../@types/database";
 import config, { SaturdayType } from "../assets/config";
 import { getEventColor } from "../utils/colors";
-import { getWeekEvent, getYearEdt } from "../utils/database";
+import { getNextExam, getWeekEvent, getYearEdt } from "../utils/database";
 import { getCurrentWeekNumber, getDateRangeOfWeek } from "../utils/date";
 import {
     formatClassname,
@@ -148,7 +148,9 @@ export function EDT({ code }: { code: string }) {
     }, [weekNumber]);
 
     useEffect(() => {
+        if (!edt) return;
         updateWeekEvent();
+        setNextExam(getNextExam(edt!));
     }, [edt]);
 
     return (
