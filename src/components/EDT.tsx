@@ -91,7 +91,7 @@ export function EDT({ code }: { code: string }) {
 
     const setYearProxy = (_year: any) => {
         const tmp = _year.entries().next().value;
-        setYear(tmp[0]);
+        setYear(Number(tmp[0]));
     };
 
     // Get the current week event, set it has state for UI
